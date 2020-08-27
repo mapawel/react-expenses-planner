@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import { connect } from 'react-redux';
 import CardsTemplate from 'templates/CardsTemplate';
 import Card from 'components/organisms/Card/Card';
@@ -9,20 +8,11 @@ import SectionTemplate from 'templates/SectionTemplate';
 import waveUpImage from 'assets/icons/waveup.svg';
 import waveImage from 'assets/icons/wavedown.svg';
 import Wave from 'components/atoms/Wave/Wave';
+import NavWave from 'components/atoms/NavWave/NavWave';
 import MonthsTitle from 'components/molecules/MonthsTitle/MonthsTitle';
 import BackImage from 'components/atoms/BackImage/BackImage';
 import coinsImage from 'assets/images/coins.png';
 import withContext from 'hoc/withContext';
-
-const StyledUpWave = styled(Wave)`
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: -235px 0%;
-    width: 100%;
-    height: 34px;
-    margin-bottom: 0px;
-    margin-top: -1px;
-`;
 
 const Dashboard = ({ allPayments, context: {currentTime} }) => (
 
@@ -30,7 +20,7 @@ const Dashboard = ({ allPayments, context: {currentTime} }) => (
         <SectionTemplate backtype="secondary">
           <Navigation />
         </SectionTemplate>
-        <StyledUpWave image={waveUpImage} />
+        <NavWave image={waveUpImage} />
         <SectionTemplate
           sectionname="still to pay in this month:"
         >

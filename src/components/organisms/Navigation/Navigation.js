@@ -1,6 +1,6 @@
 /* eslint-disable react/prefer-stateless-function */
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import Logo from 'components/atoms/Logo/Logo';
 import BurgerButton from 'components/atoms/BurgerButton/BurgerButton';
@@ -128,6 +128,10 @@ class Navigation extends React.Component {
     isMenuOpen: false,
   }
 
+  componentDidMount(){
+    document.body.style.overflowY = 'auto';
+  }
+
   handleMenuOpen = () => {
     this.setState((prevState) => ({
       isMenuOpen: !prevState.isMenuOpen,
@@ -193,4 +197,4 @@ class Navigation extends React.Component {
     );
   }
 }
-export default Navigation;
+export default withRouter(Navigation);
