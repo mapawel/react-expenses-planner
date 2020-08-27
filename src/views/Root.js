@@ -22,7 +22,6 @@ class Root extends React.Component {
 
   componentDidMount() {
     this.timer = setInterval(this.updateState, 10000);
-    console.log(this.state.currentTime);
   }
 
   componentWillUnmount() {

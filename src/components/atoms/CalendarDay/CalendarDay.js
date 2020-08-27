@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import styled from 'styled-components';
 import Paragraph from 'components/atoms/Paragraph/Paragraph';
 
@@ -15,7 +16,7 @@ const StyledDateWrapper = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: ${({ theme }) => theme.color.darkgrey};
+    background-color: ${({ daytype, theme }) => (daytype ? theme.color.lightgrey : theme.color.darkgrey)};
 `;
 
 const StyledDateParagraph = styled(Paragraph)`
@@ -41,21 +42,27 @@ const StyledPaymentParagraph = styled(Paragraph)`
     color: ${({ theme }) => theme.color.darkblue};
 `;
 
-const CalendarDay = () => (
+const CalendarDay = ({ day }) => {
+  let daytype;
+  if (moment(day).weekday() === 6 || moment(day).weekday() === 0) {
+    daytype = 'weekday';
+  }
+  return (
     <StyledWrapper>
-        <StyledDateWrapper>
-            <StyledDateParagraph>TUE</StyledDateParagraph>
-            <StyledDateParagraph>01/08</StyledDateParagraph>
-        </StyledDateWrapper>
-        <StyledPaymentsList>
-            <StyledPaymentElement>
-                <StyledPaymentParagraph>insurance: 2450 PLN</StyledPaymentParagraph>
-            </StyledPaymentElement>
-            <StyledPaymentElement>
-                <StyledPaymentParagraph>car tires: 1000 PLN</StyledPaymentParagraph>
-            </StyledPaymentElement>
-        </StyledPaymentsList>
+      <StyledDateWrapper daytype={daytype}>
+        <StyledDateParagraph>{moment(day).format('ddd')}</StyledDateParagraph>
+        <StyledDateParagraph>{moment(day).format('DD/MM')}</StyledDateParagraph>
+      </StyledDateWrapper>
+      <StyledPaymentsList>
+        <StyledPaymentElement>
+          <StyledPaymentParagraph>insurance: 2450 PLN</StyledPaymentParagraph>
+        </StyledPaymentElement>
+        <StyledPaymentElement>
+          <StyledPaymentParagraph>car tires: 1000 PLN</StyledPaymentParagraph>
+        </StyledPaymentElement>
+      </StyledPaymentsList>
 
     </StyledWrapper>
-);
+  );
+};
 export default CalendarDay;
