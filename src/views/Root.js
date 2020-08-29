@@ -17,27 +17,39 @@ class Root extends React.Component {
     super(props);
     this.state = {
       currentTime: new Date(),
+      monthShift: 0,
     };
   }
 
   componentDidMount() {
-    this.timer = setInterval(this.updateState, 10000);
+    this.timer = setInterval(this.updateTime, 60000);
   }
 
   componentWillUnmount() {
     clearInterval(this.timer);
   }
 
-  updateState = () => {
+  updateTime = () => {
     this.setState({
       currentTime: new Date(),
     });
   }
 
+  handleMonthShift = (shift) => {
+    this.setState(prevState => ({
+      monthShift: prevState.monthShift + shift,
+    }));
+    if (shift === 0) {
+      this.setState({
+        monthShift: 0,
+      });
+    }
+  }
+  
   render() {
-    const { currentTime } = this.state;
     const contextElements = {
-      currentTime,
+      ...this.state,
+      handleMonthShift: this.handleMonthShift,
     };
 
     return (

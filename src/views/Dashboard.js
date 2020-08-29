@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import CardsTemplate from 'templates/CardsTemplate';
-import Card from 'components/organisms/Card/Card';
+import Card from 'components/molecules/Card/Card';
 import Navigation from 'components/organisms/Navigation/Navigation';
 import SectionTemplate from 'templates/SectionTemplate';
 import waveUpImage from 'assets/icons/waveup.svg';
@@ -24,7 +24,7 @@ const Dashboard = ({ allPayments, context: {currentTime} }) => (
         <SectionTemplate
           sectionname="still to pay in this month:"
         >
-          <MonthsTitle time={currentTime} />
+          <MonthsTitle />
           <CardsTemplate>
             {
               allPayments.filter((payment) => new Date(payment.deadline).getMonth() === currentTime.getMonth())

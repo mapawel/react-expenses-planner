@@ -1,5 +1,5 @@
 import React from 'react';
-import Card from 'components/organisms/Card/Card';
+import Card from 'components/molecules/Card/Card';
 
 export default {
   title: 'cards',

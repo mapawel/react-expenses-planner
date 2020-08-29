@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import Header from 'components/atoms/Header/Header';
-import PageWrapper from 'components/atoms/PageWrapper/PageWrapper';
+import PageWrapper from 'templates/PageWrapper/PageWrapper';
 
 const StyledSection = styled.section`
     background-color: ${({ theme }) => (theme.backtype === 'secondary' ? theme.color.darkblue : 'none')};

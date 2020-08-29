@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import CalendarDay from 'components/atoms/CalendarDay/CalendarDay';
+import CalendarDay from 'components/molecules/CalendarDay/CalendarDay';
 import withContext from 'hoc/withContext';
 
 const StyledWrapper = styled.div`
@@ -44,6 +44,21 @@ class Calendar extends React.Component {
   componentDidMount() {
     const { context: { currentTime } } = this.props;
     this.getDisplayedMonthsDays(currentTime.getFullYear(), currentTime.getMonth());
+  }
+
+  componentDidUpdate(prevProps) {
+    const { context: { currentTime, monthShift } } = this.props;
+    if (monthShift !== prevProps.context.monthShift) {
+      let calculatedMonth = currentTime.getMonth() + monthShift + 1200;
+      let calendarCalculatedMonth = calculatedMonth % 12;
+      let calculatedYear = currentTime.getFullYear() + Math.floor((calculatedMonth -1200 )/12);
+      this.getDisplayedMonthsDays(calculatedYear, calendarCalculatedMonth);
+    }
+  }
+  
+  componentWillUnmount() {
+    const { context: { handleMonthShift } } = this.props;
+    handleMonthShift(0);
   }
 
   getDisplayedMonthsDays = (year, month) => {

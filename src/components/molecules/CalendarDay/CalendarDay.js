@@ -58,7 +58,7 @@ class CalendarDay extends React.Component {
     isOverflowed: false,
   };
 
-  test = () => {
+  handleOverflow = () => {
     this.setState({
       isOverflowed: true,
     });
@@ -73,6 +73,7 @@ class CalendarDay extends React.Component {
     }
     let sum = 0;
     allPayments
+      .filter((payment) => new Date(payment.deadline).getFullYear() === new Date(day).getFullYear())
       .filter((payment) => new Date(payment.deadline).getMonth() === new Date(day).getMonth())
       .filter((payment) => new Date(payment.deadline).getDate() === new Date(day).getDate())
       .forEach((payment) => sum += payment.ammount);
@@ -80,10 +81,10 @@ class CalendarDay extends React.Component {
       <StyledWrapper ispayment={sum}>
         <StyledDateWrapper daytype={daytype} ispayment={sum}>
           <StyledDateParagraph>{moment(day).format('ddd')}</StyledDateParagraph>
-          <StyledDateParagraph>{moment(day).format('DD/MM')}</StyledDateParagraph>
+          <StyledDateParagraph>{moment(day).format('DD/MM/YY')}</StyledDateParagraph>
         </StyledDateWrapper>
         <DetectableOverflow
-          onChange={this.test}
+          onChange={this.handleOverflow}
           style={{
             width: '100%',
             display: 'flex',
@@ -93,7 +94,7 @@ class CalendarDay extends React.Component {
           }}
         >
           <StyledPaymentsList>
-            {isOverflowed ? (
+            {(isOverflowed && sum !== 0) ? (
               <StyledPaymentParagraph style={{ textAlign: 'center', marginRight: '8px' }}>
                 {'Ammount of '}
                 <StyledAmoSpan>{sum}</StyledAmoSpan>
@@ -102,6 +103,7 @@ class CalendarDay extends React.Component {
               </StyledPaymentParagraph>
             ) : (
               allPayments
+                .filter((payment) => new Date(payment.deadline).getFullYear() === new Date(day).getFullYear())
                 .filter((payment) => new Date(payment.deadline).getMonth() === new Date(day).getMonth())
                 .filter((payment) => new Date(payment.deadline).getDate() === new Date(day).getDate())
                 .map((payment) => (

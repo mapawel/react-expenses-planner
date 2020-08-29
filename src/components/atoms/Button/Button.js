@@ -6,7 +6,7 @@ import styled, { css } from 'styled-components';
 const BaseButton = styled.button`
     position: relative;
     min-width: ${({ icon }) => (icon ? '190px' : '160px')};
-    min-height: 44px;
+    height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -44,9 +44,9 @@ const StyledSvg = styled(ReactSVG)`
 `;
 
 const Button = ({
-  className, children, round, icon, resetmargin,
+  className, children, round, icon, resetmargin, onClick
 }) => (
-  <BaseButton className={className} icon={icon} round={round}>
+  <BaseButton className={className} icon={icon} round={round} onClick={onClick}>
     {icon ? (
       <>
         <StyledSvg resetmargin={resetmargin} src={icon} round={round} />

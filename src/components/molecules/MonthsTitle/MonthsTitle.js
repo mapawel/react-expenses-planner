@@ -7,6 +7,7 @@ import Paragraph from 'components/atoms/Paragraph/Paragraph';
 import lefArrowIcon from 'assets/icons/chevronleft.svg';
 import rightArrowIcon from 'assets/icons/chevronright.svg';
 import moneyImage from 'assets/images/moneybck.jpg';
+import withContext from 'hoc/withContext';
 
 const StyledWrapper = styled.div`
     align-self: flex-start;
@@ -14,7 +15,7 @@ const StyledWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-content: center;
-    padding-right: 15px;
+    padding-right: ${({ short }) => !short && '15px'};
     background-color: #FFFFFF50;
     background-blend-mode: lighten;
     background-image: url(${moneyImage});
@@ -26,7 +27,7 @@ const StyledWrapper = styled.div`
 const HeadWrapper = styled.div`
     display: flex;
     justify-content: space-between;
-    margin-bottom: 30px;
+    
 `;
 
 const StyledSpan = styled.span`
@@ -43,7 +44,7 @@ const StyledArrowButton = styled(Button)`
 `;
 
 const StyledHeader = styled(Header)`
-    margin: 0 5px;
+    margin: 0 auto;
     font-size: ${({ theme }) => theme.fontSize.xl};
     text-align: center;
 `;
@@ -54,30 +55,51 @@ const StyledParagraph = styled(Paragraph)`
     color: ${({ theme }) => theme.color.darkgrey};
     text-transform: uppercase;
     text-align: center;
+    &:first-of-type{
+      margin-top: 30px;
+    }
 `;
 
-const MonthsTitle = ({ time }) => (
-  <StyledWrapper>
+const MonthsTitle = ({ short, context: {handleMonthShift, monthShift, currentTime} }) => {
+  let calculatedMonth = currentTime.getMonth() + monthShift + 1200;
+  let calendarCalculatedMonth = calculatedMonth % 12;
+  let calculatedYear = currentTime.getFullYear() + Math.floor((calculatedMonth -1200 )/12);
+  let displiedMont = new Date(calculatedYear, calendarCalculatedMonth);
+  return (
+  <StyledWrapper short={short}>
     <HeadWrapper>
-      <StyledArrowButton icon={lefArrowIcon} resetmargin={1}/>
+      {short && <StyledArrowButton
+      icon={lefArrowIcon}
+      resetmargin={1}
+      onClick={() => handleMonthShift(-1)}
+      />}
       <StyledHeader>
-        {moment(time).format("MMMM")}
+        {moment(displiedMont).format("MMMM")}
         <br />
-        {moment(time).format("YYYY")}
+        {moment(displiedMont).format("YYYY")}
       </StyledHeader>
-      <StyledArrowButton icon={rightArrowIcon} resetmargin={1}/>
+      {short && <StyledArrowButton
+      icon={rightArrowIcon}
+      resetmargin={1}
+      onClick={() => handleMonthShift(1)}
+      />}
     </HeadWrapper>
-    <StyledParagraph>
-      still to pay <br />
-      <StyledSpan>3250</StyledSpan>
-      pln
-    </StyledParagraph>
-    <Paragraph small style={{textAlign: 'center', marginBottom: '20px'}}>this month</Paragraph>
-    <StyledParagraph>
-      <StyledSpan>1250</StyledSpan>
-      pln
-    </StyledParagraph>
-    <Paragraph small style={{textAlign: 'center'}}>today</Paragraph>
+    {!short && (
+      <>
+      <StyledParagraph>
+        still to pay <br />
+        <StyledSpan>3250</StyledSpan>
+        pln
+      </StyledParagraph>
+      <Paragraph small style={{textAlign: 'center', marginBottom: '20px'}}>this month</Paragraph>
+      <StyledParagraph>
+        <StyledSpan>1250</StyledSpan>
+        pln
+      </StyledParagraph>
+      <Paragraph small style={{textAlign: 'center'}}>today</Paragraph>
+      </>
+    )}
   </StyledWrapper>
-);
-export default MonthsTitle;
+)
+};
+export default withContext(MonthsTitle);
