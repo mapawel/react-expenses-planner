@@ -47,12 +47,9 @@ class Calendar extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { context: { currentTime, monthShift } } = this.props;
-    if (monthShift !== prevProps.context.monthShift) {
-      let calculatedMonth = currentTime.getMonth() + monthShift + 1200;
-      let calendarCalculatedMonth = calculatedMonth % 12;
-      let calculatedYear = currentTime.getFullYear() + Math.floor((calculatedMonth -1200 )/12);
-      this.getDisplayedMonthsDays(calculatedYear, calendarCalculatedMonth);
+    const { context: { displiedDate } } = this.props;
+    if (displiedDate !== prevProps.context.displiedDate) {
+      this.getDisplayedMonthsDays(displiedDate.getFullYear(), displiedDate.getMonth());
     }
   }
   

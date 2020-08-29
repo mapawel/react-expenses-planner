@@ -24,8 +24,13 @@ const DataUpdater = ({ updateFn }) => {
   const handleUpdate = () => {
     const getToday = () => new Date().getTime();
     const getFutureDeadline = () => (getToday() + Math.floor((Math.random() * 8000000000)));
+    const getPastDeadline = () => (getToday() - Math.floor((Math.random() * 1500000000)));
     const updatedPayments = paymentsToUpdate.map((payment) => ({ ...payment }));
-    updatedPayments.forEach((payment, index) => payment.deadline = (index < 2) ? getToday() : getFutureDeadline());
+    updatedPayments.forEach((payment, index) => {
+      if (index < 2) payment.deadline = getPastDeadline();
+      else if (index >= 2 && index < 4) payment.deadline = getToday();
+      else payment.deadline = getFutureDeadline();
+    });
     updatedPayments.sort((a, b) => a.deadline - b.deadline)
     updateFn(updatedPayments);
   };

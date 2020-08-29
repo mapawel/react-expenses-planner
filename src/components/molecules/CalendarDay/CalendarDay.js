@@ -8,7 +8,7 @@ import DetectableOverflow from 'react-detectable-overflow';
 const StyledWrapper = styled.div`
     display: flex;
     border-radius: 10px;
-    box-shadow: 4px 4px 15px -2px ${({ ispayment, theme }) => ispayment !== 0 ? theme.color.lightblue : theme.color.lightshadow};
+    box-shadow: 4px 4px 15px -2px ${({ isPayment, theme }) => isPayment !== 0 ? theme.color.lightblue : theme.color.lightshadow};
     overflow: hidden;
 `;
 
@@ -19,7 +19,7 @@ const StyledDateWrapper = styled.div`
     justify-content: center;
     align-items: center;
     background-color: ${({ daytype, theme }) => (daytype ? theme.color.lightgrey : theme.color.darkgrey)};
-    ${({ ispayment }) => ispayment !== 0 && css`
+    ${({ isPayment }) => isPayment !== 0 && css`
     background-color: ${({ daytype, theme }) => (daytype ? theme.color.lightblue : theme.color.darkblue)};
     `}
 `;
@@ -42,6 +42,7 @@ const StyledPaymentsList = styled.div`
 const StyledPaymentParagraph = styled(Paragraph)`
     color: ${({ theme }) => theme.color.darkblue};
     font-weight: ${({ theme }) => theme.fontWeight.bold};
+    text-decoration: ${({ isPaid }) => (isPaid === true && 'line-through')};
 `;
 
 const StyledAmoSpan = styled.span`
@@ -76,12 +77,13 @@ class CalendarDay extends React.Component {
       .filter((payment) => new Date(payment.deadline).getFullYear() === new Date(day).getFullYear())
       .filter((payment) => new Date(payment.deadline).getMonth() === new Date(day).getMonth())
       .filter((payment) => new Date(payment.deadline).getDate() === new Date(day).getDate())
+      .filter((payment) => payment.closed === false)
       .forEach((payment) => sum += payment.ammount);
     return (
-      <StyledWrapper ispayment={sum}>
-        <StyledDateWrapper daytype={daytype} ispayment={sum}>
+      <StyledWrapper isPayment={sum}>
+        <StyledDateWrapper daytype={daytype} isPayment={sum}>
           <StyledDateParagraph>{moment(day).format('ddd')}</StyledDateParagraph>
-          <StyledDateParagraph>{moment(day).format('DD/MM/YY')}</StyledDateParagraph>
+          <StyledDateParagraph>{moment(day).format('DD/MM')}</StyledDateParagraph>
         </StyledDateWrapper>
         <DetectableOverflow
           onChange={this.handleOverflow}
@@ -107,9 +109,9 @@ class CalendarDay extends React.Component {
                 .filter((payment) => new Date(payment.deadline).getMonth() === new Date(day).getMonth())
                 .filter((payment) => new Date(payment.deadline).getDate() === new Date(day).getDate())
                 .map((payment) => (
-                  <StyledPaymentParagraph key={payment.id}>
+                  <StyledPaymentParagraph key={payment.id} isPaid={payment.closed}>
                     {`${payment.title}: `}
-                    <StyledAmoSpan>{payment.ammount}</StyledAmoSpan>
+                    <StyledAmoSpan>{payment.closed ? payment.paidAmmount : payment.ammount}</StyledAmoSpan>
                     <StyledCurrSpan>PLN</StyledCurrSpan>
                   </StyledPaymentParagraph>
                 )))}

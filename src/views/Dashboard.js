@@ -27,7 +27,10 @@ const Dashboard = ({ allPayments, context: {currentTime} }) => (
           <MonthsTitle />
           <CardsTemplate>
             {
-              allPayments.filter((payment) => new Date(payment.deadline).getMonth() === currentTime.getMonth())
+              allPayments
+              .filter((payment) => new Date(payment.deadline).getFullYear() === currentTime.getFullYear())
+              .filter((payment) => new Date(payment.deadline).getMonth() === currentTime.getMonth())
+              .filter((payment) => payment.closed === false)
                 .map((payment) => (
                   <Card
                     key={payment.id}
@@ -51,8 +54,10 @@ const Dashboard = ({ allPayments, context: {currentTime} }) => (
           <CardsTemplate>
             {
               allPayments
+                .filter((payment) => new Date(payment.deadline).getFullYear() === currentTime.getFullYear())
                 .filter((payment) => new Date(payment.deadline).getMonth() === currentTime.getMonth())
                 .filter((payment) => new Date(payment.deadline).getDate() === currentTime.getDate())
+                .filter((payment) => payment.closed === false)
                 .map((payment) => (
                   <Card
                     key={payment.id}

@@ -18,11 +18,16 @@ class Root extends React.Component {
     this.state = {
       currentTime: new Date(),
       monthShift: 0,
+      displiedDate: '',
     };
   }
 
   componentDidMount() {
+    const { currentTime } = this.state;
     this.timer = setInterval(this.updateTime, 60000);
+    this.setState({
+      displiedDate: new Date(currentTime.getFullYear(), currentTime.getMonth()),
+    });
   }
 
   componentWillUnmount() {
@@ -36,13 +41,20 @@ class Root extends React.Component {
   }
 
   handleMonthShift = (shift) => {
+    const { currentTime, monthShift } = this.state;
+    let calculatedMonth = currentTime.getMonth() + monthShift + shift + 1200;
+    let calendarCalculatedMonth = calculatedMonth % 12;
+    let calculatedYear = currentTime.getFullYear() + Math.floor((calculatedMonth -1200 )/12);
+    let displiedDate = new Date(calculatedYear, calendarCalculatedMonth);
     this.setState(prevState => ({
       monthShift: prevState.monthShift + shift,
+      displiedDate: displiedDate,
     }));
     if (shift === 0) {
-      this.setState({
+      this.setState(prevState => ({
         monthShift: 0,
-      });
+        displiedDate: new Date(prevState.currentTime.getFullYear(), prevState.currentTime.getMonth()),
+      }));
     }
   }
   

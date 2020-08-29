@@ -60,46 +60,46 @@ const StyledParagraph = styled(Paragraph)`
     }
 `;
 
-const MonthsTitle = ({ short, context: {handleMonthShift, monthShift, currentTime} }) => {
-  let calculatedMonth = currentTime.getMonth() + monthShift + 1200;
-  let calendarCalculatedMonth = calculatedMonth % 12;
-  let calculatedYear = currentTime.getFullYear() + Math.floor((calculatedMonth -1200 )/12);
-  let displiedMont = new Date(calculatedYear, calendarCalculatedMonth);
-  return (
+const MonthsTitle = ({ short, context: { handleMonthShift, displiedDate } }) => (
   <StyledWrapper short={short}>
     <HeadWrapper>
-      {short && <StyledArrowButton
-      icon={lefArrowIcon}
-      resetmargin={1}
-      onClick={() => handleMonthShift(-1)}
-      />}
+      {short && (
+        <StyledArrowButton
+          icon={lefArrowIcon}
+          resetmargin={1}
+          onClick={() => handleMonthShift(-1)}
+        />
+      )}
       <StyledHeader>
-        {moment(displiedMont).format("MMMM")}
+        {moment(displiedDate).format('MMMM')}
         <br />
-        {moment(displiedMont).format("YYYY")}
+        {moment(displiedDate).format('YYYY')}
       </StyledHeader>
-      {short && <StyledArrowButton
-      icon={rightArrowIcon}
-      resetmargin={1}
-      onClick={() => handleMonthShift(1)}
-      />}
+      {short && (
+        <StyledArrowButton
+          icon={rightArrowIcon}
+          resetmargin={1}
+          onClick={() => handleMonthShift(1)}
+        />
+      )}
     </HeadWrapper>
     {!short && (
       <>
-      <StyledParagraph>
-        still to pay <br />
-        <StyledSpan>3250</StyledSpan>
-        pln
-      </StyledParagraph>
-      <Paragraph small style={{textAlign: 'center', marginBottom: '20px'}}>this month</Paragraph>
-      <StyledParagraph>
-        <StyledSpan>1250</StyledSpan>
-        pln
-      </StyledParagraph>
-      <Paragraph small style={{textAlign: 'center'}}>today</Paragraph>
+        <StyledParagraph>
+          still to pay
+          {' '}
+          <br />
+          <StyledSpan>3250</StyledSpan>
+          pln
+        </StyledParagraph>
+        <Paragraph small style={{ textAlign: 'center', marginBottom: '20px' }}>this month</Paragraph>
+        <StyledParagraph>
+          <StyledSpan>1250</StyledSpan>
+          pln
+        </StyledParagraph>
+        <Paragraph small style={{ textAlign: 'center' }}>today</Paragraph>
       </>
     )}
   </StyledWrapper>
-)
-};
+);
 export default withContext(MonthsTitle);

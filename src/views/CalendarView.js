@@ -24,7 +24,7 @@ const CalendarView = ({ currentTime }) => (
         <Button>add new payment</Button>
         <Button>month's details</Button>
         <InfoHeader>month's total payments:</InfoHeader>
-        <InfoHeader>still to pay this month:</InfoHeader>
+        <InfoHeader topay={1} >still to pay this month:</InfoHeader>
       </GridTemplate>
     </SectionTemplate>
     <SectionTemplate>
