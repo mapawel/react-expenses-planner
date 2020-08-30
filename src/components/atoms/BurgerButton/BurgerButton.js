@@ -36,7 +36,7 @@ const StyledBurgerButton = styled.button`
         width: 60%;
         left: 50%;
         top: 50%;
-        background-color: ${({ theme }) => theme.color.white}
+        background-color: ${({ theme }) => theme.backtype === 'secondary' ? theme.color.white : theme.color.darkblue};
     }
     ::after{
         transform: translate(-50%, 7px);

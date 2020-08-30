@@ -44,9 +44,9 @@ const StyledSvg = styled(ReactSVG)`
 `;
 
 const Button = ({
-  className, children, round, icon, resetmargin, onClick
+  className, children, round, icon, resetmargin, ...props
 }) => (
-  <BaseButton className={className} icon={icon} round={round} onClick={onClick}>
+  <BaseButton className={className} icon={icon} round={round} {...props}>
     {icon ? (
       <>
         <StyledSvg resetmargin={resetmargin} src={icon} round={round} />

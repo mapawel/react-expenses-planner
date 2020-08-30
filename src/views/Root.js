@@ -9,6 +9,7 @@ import store from 'store';
 import Dashboard from 'views/Dashboard';
 import CalendarView from 'views/CalendarView';
 import TestView3 from 'views/TestsViews/TestView3';
+import MonthView from 'views/MonthView';
 import DataUpdater from 'assets/data/DataUpdater';
 import AppContext from 'context';
 
@@ -75,6 +76,7 @@ class Root extends React.Component {
                 <Route path={routes.dashboard} component={Dashboard} />
                 <Route path={routes.calendar} component={CalendarView} />
                 <Route path={routes.test3} component={TestView3} />
+                <Route path={routes.month} component={MonthView} />
               </Switch>
             </RootTemplate>
           </AppContext.Provider>

@@ -14,6 +14,7 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledInnerWrapper = styled.div`
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -25,6 +26,16 @@ const StyledInnerWrapper = styled.div`
     @media (min-width: 768px) {
       flex-direction: row;
     }
+`;
+
+const StyledBlend = styled.div`
+    position: absolute;
+    z-index: 4;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: ${({ theme }) => theme.color.blendBlack};
 `;
 
 const StyledTitleWrapper = styled.div`
@@ -39,6 +50,7 @@ const StyledTitleWrapper = styled.div`
     background-color: ${({ theme }) => (theme.backtype === 'secondary' ? theme.color.lightblue : theme.color.darkblue)};
     border-radius: 36px;
     box-shadow: 4px 4px 18px -2px ${({ theme }) => (theme.backtype === 'secondary' ? theme.color.darkshadow : theme.color.darkshadow)};
+    overflow: hidden;
 
     @media (min-width: 768px) {
       right: -10px;
@@ -99,10 +111,25 @@ const StyledTitleParagraph = styled(Paragraph)`
     width: 50%;
     padding: 0 15px;
     text-align: center;
+    text-decoration: ${({ closed }) => closed && 'line-through'};
+`;
+
+const StyledPaidTxt = styled(StyledTitleParagraph)`
+    z-index: 5;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    color: ${({ theme }) => theme.color.lightblue};
+    ::before{
+      content: 'paid: ';
+      width: 100%;
+      font-size: ${({ theme }) => theme.fontSize.xs};
+    }
 `;
 
 const StylenSpanPln = styled.span`
-  color:  ${({ theme }) => (theme.backtype === "secondary" ? theme.color.almostblack : theme.color.white)};
+  color:  ${({ theme }) => (theme.backtype === 'secondary' ? theme.color.almostblack : theme.color.white)};
   text-transform: uppercase;
   font-weight:  ${({ theme }) => theme.fontWeight.bold};
   font-size:  ${({ theme }) => theme.fontSize.s};
@@ -121,20 +148,31 @@ const StyledDateParagraph = styled(Paragraph)`
 `;
 
 const Card = ({
-  category, title, ammount, description, deadline, cycle,
+  category, title, ammount, description, deadline, cycle, paidAmmount, closed,
 }) => (
   <StyledWrapper>
     <StyledTitleWrapper>
-      <StyledTitleParagraph big>{title}</StyledTitleParagraph>
+      {closed && <StyledBlend />}
+      <StyledTitleParagraph big closed={closed}>{title}</StyledTitleParagraph>
       <StyledLine />
-      <StyledTitleParagraph big>
+      <StyledTitleParagraph big closed={closed}>
         {ammount}
         <StylenSpanPln>
             &nbsp;pln
         </StylenSpanPln>
       </StyledTitleParagraph>
+      {closed
+          && (
+            <StyledPaidTxt big>
+              {paidAmmount}
+              <StylenSpanPln>
+                &nbsp;pln
+              </StylenSpanPln>
+            </StyledPaidTxt>
+          )}
     </StyledTitleWrapper>
     <StyledInnerWrapper>
+      {closed && <StyledBlend />}
       <HeroCardImage category={category}>
         <StyledImageHeader uppercase>{category}</StyledImageHeader>
       </HeroCardImage>

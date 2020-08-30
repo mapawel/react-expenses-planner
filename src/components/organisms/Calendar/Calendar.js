@@ -53,10 +53,10 @@ class Calendar extends React.Component {
     }
   }
   
-  componentWillUnmount() {
-    const { context: { handleMonthShift } } = this.props;
-    handleMonthShift(0);
-  }
+  // componentWillUnmount() {
+  //   const { context: { handleMonthShift } } = this.props;
+  //   handleMonthShift(0);
+  // }
 
   getDisplayedMonthsDays = (year, month) => {
     const monthsDay = new Date(year, month, 1);

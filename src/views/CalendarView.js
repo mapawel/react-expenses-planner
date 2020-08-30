@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import Navigation from 'components/organisms/Navigation/Navigation';
 import SectionTemplate from 'templates/SectionTemplate';
 import Calendar from 'components/organisms/Calendar/Calendar';
@@ -10,8 +11,15 @@ import withContext from 'hoc/withContext';
 import GridTemplate from 'templates/GridTemplate';
 import DateHead from 'components/molecules/DateHead/DateHead';
 import InfoHeader from 'components/molecules/InfoHeader/InfoHeader';
+import { Link } from 'react-router-dom';
 
-const CalendarView = ({ currentTime }) => (
+const StyledLink = styled(Link)`
+  text-decoration: none;
+`;
+
+const CalendarView = ({ context: { displiedDate } }) => {
+  const redirectPath = `${new Date(displiedDate).getFullYear()}${new Date(displiedDate).getMonth()}`;
+  return (
   <>
     <SectionTemplate backtype="secondary">
       <Navigation />
@@ -22,14 +30,15 @@ const CalendarView = ({ currentTime }) => (
         <MonthsTitle short={1} />
         <DateHead />
         <Button>add new payment</Button>
-        <Button>month's details</Button>
+        <StyledLink to={`/month/${redirectPath}`}><Button>month's details</Button></StyledLink>
         <InfoHeader>month's total payments:</InfoHeader>
-        <InfoHeader topay={1} >still to pay this month:</InfoHeader>
+        <InfoHeader topay={1}>still to pay this month:</InfoHeader>
       </GridTemplate>
     </SectionTemplate>
     <SectionTemplate>
       <Calendar />
     </SectionTemplate>
   </>
-);
+)
+};
 export default withContext(CalendarView);

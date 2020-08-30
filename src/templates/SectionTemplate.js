@@ -4,7 +4,11 @@ import Header from 'components/atoms/Header/Header';
 import PageWrapper from 'templates/PageWrapper/PageWrapper';
 
 const StyledSection = styled.section`
-    background-color: ${({ theme }) => (theme.backtype === 'secondary' ? theme.color.darkblue : 'none')};
+    background-color: ${
+    ({ theme }) => {
+      const color = theme.nav ? theme.color.lightblue : 'none';
+      return (theme.backtype === 'secondary' ? theme.color.darkblue : color)
+    }};
 `;
 
 const StyledHeader = styled(Header)`
@@ -22,8 +26,8 @@ const StyledInnerWrapper = styled(Header)`
     }
 `;
 
-const SectionTemplate = ({ children, backtype, sectionname }) => (
-  <ThemeProvider theme={{ backtype }}>
+const SectionTemplate = ({ children, backtype, sectionname, nav }) => (
+  <ThemeProvider theme={{ backtype, nav }}>
     <StyledSection>
       <PageWrapper>
         {sectionname && <StyledHeader>{sectionname}</StyledHeader>}

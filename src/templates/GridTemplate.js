@@ -16,7 +16,8 @@ const StyledWrapper = styled.div`
         grid-row: 3/4;
         grid-column: 1/3;
     }
-    & > button:last-of-type{
+    & > a:first-of-type{
+        display: grid;
         grid-row: 4/5;
         grid-column: 1/3;
     }
@@ -36,7 +37,7 @@ const StyledWrapper = styled.div`
     & > button:first-of-type{
         grid-column: 1/2;
     }
-    & > button:last-of-type{
+    & > a:first-of-type{
         grid-column: 1/2;
     }
     & > p:first-of-type{

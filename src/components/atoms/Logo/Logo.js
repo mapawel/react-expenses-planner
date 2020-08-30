@@ -15,6 +15,7 @@ const StyledLogoText = styled.h1`
     margin-left: 15px;
     letter-spacing: 1.5px;
     line-height: 1.2;
+    color: ${({ theme }) => theme.backtype === 'secondary' ? theme.color.white : theme.color.darkblue};
     span {
         font-weight: ${({theme}) => theme.fontWeight.bold};
         letter-spacing: 5px;
@@ -25,6 +26,7 @@ const StyledLogoText = styled.h1`
 const StyledSvg = styled(ReactSVG)`
   height: 35px;
   width: 30px;
+  color: ${({ theme }) => theme.backtype === 'secondary' ? theme.color.white : theme.color.darkblue};
 `;
 
 const Logo = () => (
