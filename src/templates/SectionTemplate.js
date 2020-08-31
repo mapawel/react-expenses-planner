@@ -16,7 +16,7 @@ const StyledHeader = styled(Header)`
     margin: 0 0 55px;
 `;
 
-const StyledInnerWrapper = styled(Header)`
+const StyledInnerWrapper = styled.div`
     width: 100%;
     display: flex;
     justify-content: center;

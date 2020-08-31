@@ -20,6 +20,7 @@ const StyledWrapper = styled.div`
         display: grid;
         grid-row: 4/5;
         grid-column: 1/3;
+        margin: 0;
     }
     & > p:first-of-type{
         grid-row: 5/6;

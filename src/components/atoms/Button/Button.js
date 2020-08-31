@@ -35,9 +35,10 @@ const StyledSvg = styled(ReactSVG)`
     display: ${({ resetmargin }) => (resetmargin ? 'flex' : 'block')};
     justify-content: center;
     margin-right: ${({ resetmargin }) => (resetmargin ? '0' : '10px')};
-    color: ${({ theme }) => theme.color.darkblue};
+    color: ${({ theme }) => theme.backtype === 'secondary' ? theme.color.white : theme.color.darkgrey};
 
     ${({ round }) => round && css`
+    color: ${({ theme }) => theme.color.darkblue};
     margin-right: 0;
     margin-top: 2px;
     `}

@@ -42,8 +42,8 @@ class Calendar extends React.Component {
   };
 
   componentDidMount() {
-    const { context: { currentTime } } = this.props;
-    this.getDisplayedMonthsDays(currentTime.getFullYear(), currentTime.getMonth());
+    const { context: { displiedDate } } = this.props;
+    this.getDisplayedMonthsDays(displiedDate.getFullYear(), displiedDate.getMonth());
   }
 
   componentDidUpdate(prevProps) {
@@ -52,11 +52,6 @@ class Calendar extends React.Component {
       this.getDisplayedMonthsDays(displiedDate.getFullYear(), displiedDate.getMonth());
     }
   }
-  
-  // componentWillUnmount() {
-  //   const { context: { handleMonthShift } } = this.props;
-  //   handleMonthShift(0);
-  // }
 
   getDisplayedMonthsDays = (year, month) => {
     const monthsDay = new Date(year, month, 1);

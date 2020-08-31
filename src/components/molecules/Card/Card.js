@@ -130,6 +130,7 @@ const StyledPaidTxt = styled(StyledTitleParagraph)`
 
 const StylenSpanPln = styled.span`
   color:  ${({ theme }) => (theme.backtype === 'secondary' ? theme.color.almostblack : theme.color.white)};
+  color: ${({ closed, theme }) => closed && theme.color.lightblue};
   text-transform: uppercase;
   font-weight:  ${({ theme }) => theme.fontWeight.bold};
   font-size:  ${({ theme }) => theme.fontSize.s};
@@ -153,7 +154,7 @@ const Card = ({
   <StyledWrapper>
     <StyledTitleWrapper>
       {closed && <StyledBlend />}
-      <StyledTitleParagraph big closed={closed}>{title}</StyledTitleParagraph>
+      <StyledTitleParagraph big>{title}</StyledTitleParagraph>
       <StyledLine />
       <StyledTitleParagraph big closed={closed}>
         {ammount}
@@ -165,7 +166,7 @@ const Card = ({
           && (
             <StyledPaidTxt big>
               {paidAmmount}
-              <StylenSpanPln>
+              <StylenSpanPln closed={closed}>
                 &nbsp;pln
               </StylenSpanPln>
             </StyledPaidTxt>

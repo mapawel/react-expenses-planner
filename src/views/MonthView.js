@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import CardsTemplate from 'templates/CardsTemplate';
@@ -8,9 +9,21 @@ import SectionTemplate from 'templates/SectionTemplate';
 import waveUpLightImage from 'assets/icons/waveuplight.svg';
 import NavWave from 'components/atoms/NavWave/NavWave';
 import MonthsTitle from 'components/molecules/MonthsTitle/MonthsTitle';
-import BackImage from 'components/atoms/BackImage/BackImage';
-import coinsImage from 'assets/images/coins.png';
+import Button from 'components/atoms/Button/Button';
 import withContext from 'hoc/withContext';
+import lefArrowIcon from 'assets/icons/chevronleft.svg';
+import { Link } from 'react-router-dom';
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+`;
+
+const StyledLeftBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 50px;
+  padding-right: 15px;
+`;
 
 const MonthView = ({ allPayments, context: {currentTime, displiedDate} }) => (
     <>
@@ -22,7 +35,10 @@ const MonthView = ({ allPayments, context: {currentTime, displiedDate} }) => (
       sectionname="month's details:"
       backtype="secondary"
     >
-      <BackImage img={coinsImage} />
+      <StyledLeftBox>
+      <MonthsTitle short={1} />
+      <StyledLink to='/calendar'><Button>go back</Button></StyledLink>
+      </StyledLeftBox>
       <CardsTemplate>
         {
           allPayments

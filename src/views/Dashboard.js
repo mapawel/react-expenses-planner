@@ -14,8 +14,15 @@ import BackImage from 'components/atoms/BackImage/BackImage';
 import coinsImage from 'assets/images/coins.png';
 import withContext from 'hoc/withContext';
 
-const Dashboard = ({ allPayments, context: {currentTime} }) => (
+class Dashboard extends React.Component {
+  componentDidMount() {
+    const { context: { handleMonthShift } } = this.props;
+    handleMonthShift(0);
+  }
 
+  render() {
+    const { allPayments, context: { currentTime } } = this.props;
+    return (
       <>
         <SectionTemplate backtype="secondary">
           <Navigation />
@@ -28,9 +35,9 @@ const Dashboard = ({ allPayments, context: {currentTime} }) => (
           <CardsTemplate>
             {
               allPayments
-              .filter((payment) => new Date(payment.deadline).getFullYear() === currentTime.getFullYear())
-              .filter((payment) => new Date(payment.deadline).getMonth() === currentTime.getMonth())
-              .filter((payment) => payment.closed === false)
+                .filter((payment) => new Date(payment.deadline).getFullYear() === currentTime.getFullYear())
+                .filter((payment) => new Date(payment.deadline).getMonth() === currentTime.getMonth())
+                .filter((payment) => payment.closed === false)
                 .map((payment) => (
                   <Card
                     key={payment.id}
@@ -73,7 +80,9 @@ const Dashboard = ({ allPayments, context: {currentTime} }) => (
           </CardsTemplate>
         </SectionTemplate>
       </>
-);
+    );
+  }
+}
 
 const mapStateToProps = (state) => ({
   allPayments: state.payments,

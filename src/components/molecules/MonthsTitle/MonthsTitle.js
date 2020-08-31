@@ -6,25 +6,38 @@ import Header from 'components/atoms/Header/Header';
 import Paragraph from 'components/atoms/Paragraph/Paragraph';
 import lefArrowIcon from 'assets/icons/chevronleft.svg';
 import rightArrowIcon from 'assets/icons/chevronright.svg';
-import moneyImage from 'assets/images/moneybck.jpg';
+import moneyImage2 from 'assets/images/moneybck2.png';
 import withContext from 'hoc/withContext';
+import { connect } from 'react-redux';
 
 const StyledWrapper = styled.div`
+    position: relative;
     align-self: flex-start;
     min-width: 15%;
     display: flex;
     flex-direction: column;
     align-content: center;
     padding-right: ${({ short }) => !short && '15px'};
-    background-color: #FFFFFF50;
-    background-blend-mode: lighten;
-    background-image: url(${moneyImage});
+    margin-bottom: 50px;
+    background-image: url(${moneyImage2});
     background-repeat: no-repeat;
     background-size: 80%;
-    background-position: 20% 80%;
+    background-position: 30% 98%;
+    &::after{
+      content: '';
+      position: absolute;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background-color: ${({ theme }) => (theme.backtype === 'secondary') ? theme.color.darkblue : theme.color.white};
+      opacity: .87;
+    }
 `;
 
 const HeadWrapper = styled.div`
+    z-index: 1;
     display: flex;
     justify-content: space-between;
     
@@ -41,6 +54,7 @@ const StyledArrowButton = styled(Button)`
     padding: 0 10px;
     background: none;
     box-shadow: none;
+    color: red;
 `;
 
 const StyledHeader = styled(Header)`
@@ -50,6 +64,7 @@ const StyledHeader = styled(Header)`
 `;
 
 const StyledParagraph = styled(Paragraph)`
+    z-index: 1;
     font-size: ${({ theme }) => theme.fontSize.m};
     font-weight: ${({ theme }) => theme.fontWeight.bold};
     color: ${({ theme }) => theme.color.darkgrey};
@@ -60,46 +75,67 @@ const StyledParagraph = styled(Paragraph)`
     }
 `;
 
-const MonthsTitle = ({ short, context: { handleMonthShift, displiedDate } }) => (
-  <StyledWrapper short={short}>
-    <HeadWrapper>
-      {short && (
-        <StyledArrowButton
-          icon={lefArrowIcon}
-          resetmargin={1}
-          onClick={() => handleMonthShift(-1)}
-        />
-      )}
-      <StyledHeader>
-        {moment(displiedDate).format('MMMM')}
-        <br />
-        {moment(displiedDate).format('YYYY')}
-      </StyledHeader>
-      {short && (
-        <StyledArrowButton
-          icon={rightArrowIcon}
-          resetmargin={1}
-          onClick={() => handleMonthShift(1)}
-        />
-      )}
-    </HeadWrapper>
-    {!short && (
-      <>
-        <StyledParagraph>
-          still to pay
-          {' '}
+const MonthsTitle = ({ allPayments, short, context: { handleMonthShift, displiedDate, currentTime } }) => {
+  let sumTotalDay = 0;
+  let sumToPayMonth = 0;
+  allPayments
+    .filter((payment) => new Date(payment.deadline).getFullYear() === new Date(displiedDate).getFullYear())
+    .filter((payment) => new Date(payment.deadline).getMonth() === new Date(displiedDate).getMonth())
+    .filter((payment) => new Date(payment.deadline).getDate() === new Date(currentTime).getDate())
+    .filter((payment) => payment.closed === false)
+    .forEach((payment) => sumTotalDay += payment.ammount);
+  allPayments
+    .filter((payment) => new Date(payment.deadline).getFullYear() === new Date(displiedDate).getFullYear())
+    .filter((payment) => new Date(payment.deadline).getMonth() === new Date(displiedDate).getMonth())
+    .filter((payment) => payment.closed === false)
+    .forEach((payment) => sumToPayMonth += payment.ammount);
+
+  return (
+    <StyledWrapper short={short}>
+      <HeadWrapper>
+        {short && (
+          <StyledArrowButton
+            icon={lefArrowIcon}
+            resetmargin={1}
+            onClick={() => handleMonthShift(-1)}
+          />
+        )}
+        <StyledHeader>
+          {moment(displiedDate).format('MMMM')}
           <br />
-          <StyledSpan>3250</StyledSpan>
+          {moment(displiedDate).format('YYYY')}
+        </StyledHeader>
+        {short && (
+          <StyledArrowButton
+            icon={rightArrowIcon}
+            resetmargin={1}
+            onClick={() => handleMonthShift(1)}
+          />
+        )}
+      </HeadWrapper>
+      {!short && (
+        <>
+          <StyledParagraph>
+            still to pay
+          {' '}
+            <br />
+            <StyledSpan>{sumToPayMonth}</StyledSpan>
           pln
         </StyledParagraph>
-        <Paragraph small style={{ textAlign: 'center', marginBottom: '20px' }}>this month</Paragraph>
-        <StyledParagraph>
-          <StyledSpan>1250</StyledSpan>
+          <Paragraph small style={{ textAlign: 'center', marginBottom: '20px', zIndex: '1' }}>this month</Paragraph>
+          <StyledParagraph>
+            <StyledSpan>{sumTotalDay}</StyledSpan>
           pln
         </StyledParagraph>
-        <Paragraph small style={{ textAlign: 'center' }}>today</Paragraph>
-      </>
-    )}
-  </StyledWrapper>
-);
-export default withContext(MonthsTitle);
+          <Paragraph small style={{ textAlign: 'center', zIndex: '1' }}>today</Paragraph>
+        </>
+      )}
+    </StyledWrapper>
+  );
+};
+
+const mapStateToProps = ({ payments }) => ({
+  allPayments: payments,
+});
+
+export default connect(mapStateToProps)(withContext(MonthsTitle));

@@ -19,7 +19,7 @@ class Root extends React.Component {
     this.state = {
       currentTime: new Date(),
       monthShift: 0,
-      displiedDate: '',
+      displiedDate: new Date(),
     };
   }
 
