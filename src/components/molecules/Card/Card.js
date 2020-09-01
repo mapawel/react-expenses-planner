@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import Paragraph from 'components/atoms/Paragraph/Paragraph';
 import Header from 'components/atoms/Header/Header';
 import Button from 'components/atoms/Button/Button';
@@ -17,10 +18,11 @@ const StyledInnerWrapper = styled.div`
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: ${({ theme }) => (theme.paymentview ? 'flex-start' : 'center')};
     background-color: ${({ theme }) => (theme.backtype === 'secondary' ? theme.color.darkblue : theme.color.white)};
     border-radius: 15px;
-    box-shadow: 7px 7px 35px -12px ${({ theme }) => (theme.backtype === 'secondary' ? theme.color.darkshadow : theme.color.lightshadow)};
+    text-transform: ${({ theme }) => (theme.paymentview ? 'uppercase' : 'none')};
+    box-shadow: ${({ theme }) => (theme.paymentview ? 'none' : `7px 7px 35px -12px ${(theme.backtype === 'secondary' ? theme.color.darkshadow : theme.color.lightshadow)}`)};
     overflow: hidden;
 
     @media (min-width: 768px) {
@@ -38,12 +40,17 @@ const StyledBlend = styled.div`
     background-color: ${({ theme }) => theme.color.blendBlack};
 `;
 
+const StyledBoxWhenPayment = styled.div`
+    display: ${({ theme }) => (theme.paymentview ? 'block' : 'none')};
+    margin-bottom: 15px;
+`;
+
 const StyledTitleWrapper = styled.div`
+    display: ${({ theme }) => (theme.paymentview ? 'none' : 'flex')};
     position: absolute;
     z-index: 5;
     top: -10px;
     right: -4%;
-    display: flex;
     align-items: center;
     width: 108%;
     height: 60px;
@@ -86,12 +93,12 @@ const StyledTextWrapper = styled.div`
   
   @media (min-width: 768px) {
     padding: 0 20px;
-    margin: 70px 0 10px;
+    margin: ${({ theme }) => (theme.paymentview ? '20px' : '70px')} 0 10px;
     }
 `;
 
 const StyledButtonsWrapper = styled.div`
-  display: flex;
+  display: ${({ theme }) => (theme.paymentview ? 'none' : 'flex')};
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
@@ -108,10 +115,12 @@ const StyledButtonsWrapper = styled.div`
 `;
 
 const StyledTitleParagraph = styled(Paragraph)`
-    width: 50%;
-    padding: 0 15px;
-    text-align: center;
+    width: ${({ theme }) => (theme.paymentview ? '100%' : '50%')};
+    padding: ${({ theme }) => (theme.paymentview ? '0 0 5px' : '0 15px')};
+    text-align: ${({ theme }) => (theme.paymentview ? 'left' : 'center')};
     text-decoration: ${({ closed }) => closed && 'line-through'};
+    color: ${({ theme }) => theme.paymentview && theme.color.darkblue};
+    text-transform: ${({ theme }) => (theme.paymentview ? 'uppercase' : 'none')};
 `;
 
 const StyledPaidTxt = styled(StyledTitleParagraph)`
@@ -131,6 +140,7 @@ const StyledPaidTxt = styled(StyledTitleParagraph)`
 const StylenSpanPln = styled.span`
   color:  ${({ theme }) => (theme.backtype === 'secondary' ? theme.color.almostblack : theme.color.white)};
   color: ${({ closed, theme }) => closed && theme.color.lightblue};
+  color: ${({ theme }) => theme.paymentview && theme.color.darkblue};
   text-transform: uppercase;
   font-weight:  ${({ theme }) => theme.fontWeight.bold};
   font-size:  ${({ theme }) => theme.fontSize.s};
@@ -149,20 +159,20 @@ const StyledDateParagraph = styled(Paragraph)`
 `;
 
 const Card = ({
-  category, title, ammount, description, deadline, cycle, paidAmmount, closed,
+  id, category, title, ammount, description, deadline, cycle, paidAmmount, closed,
 }) => (
-  <StyledWrapper>
-    <StyledTitleWrapper>
-      {closed && <StyledBlend />}
-      <StyledTitleParagraph big>{title}</StyledTitleParagraph>
-      <StyledLine />
-      <StyledTitleParagraph big closed={closed}>
-        {ammount}
-        <StylenSpanPln>
+    <StyledWrapper>
+      <StyledTitleWrapper>
+        {closed && <StyledBlend />}
+        <StyledTitleParagraph big>{title}</StyledTitleParagraph>
+        <StyledLine />
+        <StyledTitleParagraph big closed={closed}>
+          {ammount}
+          <StylenSpanPln>
             &nbsp;pln
         </StylenSpanPln>
-      </StyledTitleParagraph>
-      {closed
+        </StyledTitleParagraph>
+        {closed
           && (
             <StyledPaidTxt big>
               {paidAmmount}
@@ -171,27 +181,38 @@ const Card = ({
               </StylenSpanPln>
             </StyledPaidTxt>
           )}
-    </StyledTitleWrapper>
-    <StyledInnerWrapper>
-      {closed && <StyledBlend />}
-      <HeroCardImage category={category}>
-        <StyledImageHeader uppercase>{category}</StyledImageHeader>
-      </HeroCardImage>
-      <StyledTextWrapper>
-        <Paragraph small>description:</Paragraph>
-        <StyledParagraph>{description}</StyledParagraph>
-        <Paragraph small>deadline:</Paragraph>
-        <StyledDateParagraph>{new Date(deadline).toLocaleDateString()}</StyledDateParagraph>
-        <Paragraph small>cycle:</Paragraph>
-        <StyledParagraph>{cycle}</StyledParagraph>
-      </StyledTextWrapper>
-      <StyledButtonsWrapper>
-        <Button round={1} icon={moneyIcon} />
-        <Button round={1} icon={infoIcon} />
-      </StyledButtonsWrapper>
-    </StyledInnerWrapper>
-  </StyledWrapper>
-);
+      </StyledTitleWrapper>
+      <StyledInnerWrapper>
+        {closed && <StyledBlend />}
+        <HeroCardImage category={category}>
+          <StyledImageHeader uppercase>{category}</StyledImageHeader>
+        </HeroCardImage>
+        <StyledTextWrapper>
+
+          <StyledBoxWhenPayment>
+            <StyledTitleParagraph big>{title}</StyledTitleParagraph>
+            <StyledTitleParagraph big>
+              {ammount}
+              <StylenSpanPln>
+                &nbsp;pln
+            </StylenSpanPln>
+            </StyledTitleParagraph>
+          </StyledBoxWhenPayment>
+
+          <Paragraph small>description:</Paragraph>
+          <StyledParagraph>{description}</StyledParagraph>
+          <Paragraph small>deadline:</Paragraph>
+          <StyledDateParagraph>{new Date(deadline).toLocaleDateString()}</StyledDateParagraph>
+          <Paragraph small>cycle:</Paragraph>
+          <StyledParagraph>{cycle}</StyledParagraph>
+        </StyledTextWrapper>
+        <StyledButtonsWrapper>
+          <Button round={1} icon={moneyIcon} />
+          <Link to={`/payment/${id}`}><Button round={1} icon={infoIcon} /></Link>
+        </StyledButtonsWrapper>
+      </StyledInnerWrapper>
+    </StyledWrapper>
+  );
 
 Card.propTypes = {
   category: PropTypes.string.isRequired,

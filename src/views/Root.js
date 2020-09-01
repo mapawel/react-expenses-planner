@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 import store from 'store';
 import Dashboard from 'views/Dashboard';
 import CalendarView from 'views/CalendarView';
+import PaymentView from 'views/PaymentView';
 import TestView3 from 'views/TestsViews/TestView3';
 import MonthView from 'views/MonthView';
 import DataUpdater from 'assets/data/DataUpdater';
@@ -77,6 +78,7 @@ class Root extends React.Component {
                 <Route path={routes.calendar} component={CalendarView} />
                 <Route path={routes.test3} component={TestView3} />
                 <Route path={routes.month} component={MonthView} />
+                <Route path={routes.payment} component={PaymentView} />
               </Switch>
             </RootTemplate>
           </AppContext.Provider>

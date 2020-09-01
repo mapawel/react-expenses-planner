@@ -3,5 +3,6 @@ export const routes = {
   dashboard: '/dashboard',
   calendar: '/calendar',
   month: '/month/:monthId',
+  payment: '/payment/:paymentId',
   test3: '/test3',
 };

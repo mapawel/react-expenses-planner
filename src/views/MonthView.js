@@ -47,6 +47,7 @@ const MonthView = ({ allPayments, context: {currentTime, displiedDate} }) => (
             .map((payment) => (
               <Card
                 key={payment.id}
+                id={payment.id}
                 category={payment.category}
                 title={payment.title}
                 ammount={payment.ammount}

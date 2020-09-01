@@ -41,6 +41,7 @@ class Dashboard extends React.Component {
                 .map((payment) => (
                   <Card
                     key={payment.id}
+                    id={payment.id}
                     category={payment.category}
                     title={payment.title}
                     ammount={payment.ammount}
@@ -68,6 +69,7 @@ class Dashboard extends React.Component {
                 .map((payment) => (
                   <Card
                     key={payment.id}
+                    id={payment.id}
                     category={payment.category}
                     title={payment.title}
                     ammount={payment.ammount}

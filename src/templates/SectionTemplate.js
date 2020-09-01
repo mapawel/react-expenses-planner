@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider, css } from 'styled-components';
 import Header from 'components/atoms/Header/Header';
 import PageWrapper from 'templates/PageWrapper/PageWrapper';
 
@@ -24,10 +24,15 @@ const StyledInnerWrapper = styled.div`
     @media (max-width: 780px) {
       flex-wrap: wrap;
     }
+
+    ${({theme}) => theme.paymentview && css`
+      justify-content: flex-start;
+      flex-wrap: wrap;
+    `}
 `;
 
-const SectionTemplate = ({ children, backtype, sectionname, nav }) => (
-  <ThemeProvider theme={{ backtype, nav }}>
+const SectionTemplate = ({ children, backtype, sectionname, nav, paymentview }) => (
+  <ThemeProvider theme={{ backtype, nav, paymentview }}>
     <StyledSection>
       <PageWrapper>
         {sectionname && <StyledHeader>{sectionname}</StyledHeader>}
