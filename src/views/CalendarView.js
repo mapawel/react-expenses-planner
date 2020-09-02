@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import Navigation from 'components/organisms/Navigation/Navigation';
 import SectionTemplate from 'templates/SectionTemplate';
 import Calendar from 'components/organisms/Calendar/Calendar';
@@ -20,25 +21,30 @@ const StyledLink = styled(Link)`
 const CalendarView = ({ context: { displiedDate } }) => {
   const redirectPath = `${new Date(displiedDate).getFullYear()}${new Date(displiedDate).getMonth()}`;
   return (
-  <>
-    <SectionTemplate backtype="secondary">
-      <Navigation />
-    </SectionTemplate>
-    <NavWave image={waveUpImage} />
-    <SectionTemplate>
-      <GridTemplate>
-        <MonthsTitle short={1} />
-        <DateHead />
-        <Button>add new payment</Button>
-        <StyledLink to={`/month/${redirectPath}`}><Button>month's details</Button></StyledLink>
-        <InfoHeader>month's total payments:</InfoHeader>
-        <InfoHeader topay={1}>still to pay this month:</InfoHeader>
-      </GridTemplate>
-    </SectionTemplate>
-    <SectionTemplate>
-      <Calendar />
-    </SectionTemplate>
-  </>
-)
+    <>
+      <SectionTemplate backtype="secondary">
+        <Navigation />
+      </SectionTemplate>
+      <NavWave image={waveUpImage} />
+      <SectionTemplate>
+        <GridTemplate>
+          <MonthsTitle short={1} />
+          <DateHead />
+          <Button>add new payment</Button>
+          <StyledLink to={`/month/${redirectPath}`}><Button>month&apos;s details</Button></StyledLink>
+          <InfoHeader>month&apos;s total payments:</InfoHeader>
+          <InfoHeader topay={1}>still to pay this month:</InfoHeader>
+        </GridTemplate>
+      </SectionTemplate>
+      <SectionTemplate>
+        <Calendar />
+      </SectionTemplate>
+    </>
+  );
 };
+
+CalendarView.propTypes = {
+  context: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.number, PropTypes.func])).isRequired,
+};
+
 export default withContext(CalendarView);

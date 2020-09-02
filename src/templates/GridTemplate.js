@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const StyledWrapper = styled.div`
@@ -70,8 +71,13 @@ const StyledWrapper = styled.div`
 `;
 
 const GridTemplate = ({ children }) => (
-    <StyledWrapper>
-        {children}
-    </StyledWrapper>
+  <StyledWrapper>
+    {children}
+  </StyledWrapper>
 );
+
+GridTemplate.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
 export default GridTemplate;

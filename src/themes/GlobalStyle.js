@@ -15,7 +15,7 @@ const GlobalStyle = createGlobalStyle`
     }
 
     body {
-        background-color: ${({ theme }) => theme.monthView ? theme.color.darkblue : theme.color.white};
+        background-color: ${({ theme }) => (theme.darkbody ? theme.color.darkblue : theme.color.white)};
         font-family: 'Raleway', sans-serif;
         font-size: ${({ theme }) => theme.fontSize.m};
         overflow-x: hidden;

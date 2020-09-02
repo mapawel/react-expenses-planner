@@ -92,6 +92,7 @@ const mapStateToProps = (state) => ({
 
 Dashboard.propTypes = {
   allPayments: PropTypes.arrayOf(PropTypes.object).isRequired,
+  context: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.number, PropTypes.func])).isRequired,
 };
 
 export default connect(mapStateToProps)(withContext(Dashboard));

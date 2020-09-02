@@ -1,14 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled, { ThemeProvider, css } from 'styled-components';
 import Header from 'components/atoms/Header/Header';
 import PageWrapper from 'templates/PageWrapper/PageWrapper';
 
 const StyledSection = styled.section`
     background-color: ${
-    ({ theme }) => {
-      const color = theme.nav ? theme.color.lightblue : 'none';
-      return (theme.backtype === 'secondary' ? theme.color.darkblue : color)
-    }};
+  ({ theme }) => {
+    const color = theme.nav ? theme.color.lightblue : 'none';
+    return (theme.backtype === 'secondary' ? theme.color.darkblue : color);
+  }};
 `;
 
 const StyledHeader = styled(Header)`
@@ -25,13 +26,15 @@ const StyledInnerWrapper = styled.div`
       flex-wrap: wrap;
     }
 
-    ${({theme}) => theme.paymentview && css`
+    ${({ theme }) => theme.paymentview && css`
       justify-content: flex-start;
       flex-wrap: wrap;
     `}
 `;
 
-const SectionTemplate = ({ children, backtype, sectionname, nav, paymentview }) => (
+const SectionTemplate = ({
+  children, backtype, sectionname, nav, paymentview,
+}) => (
   <ThemeProvider theme={{ backtype, nav, paymentview }}>
     <StyledSection>
       <PageWrapper>
@@ -43,5 +46,10 @@ const SectionTemplate = ({ children, backtype, sectionname, nav, paymentview }) 
     </StyledSection>
   </ThemeProvider>
 );
+
+SectionTemplate.propTypes = {
+  children: PropTypes.node.isRequired,
+
+};
 
 export default SectionTemplate;

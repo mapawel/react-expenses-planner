@@ -21,7 +21,6 @@ const StyledInnerWrapper = styled.div`
     justify-content: ${({ theme }) => (theme.paymentview ? 'flex-start' : 'center')};
     background-color: ${({ theme }) => (theme.backtype === 'secondary' ? theme.color.darkblue : theme.color.white)};
     border-radius: 15px;
-    text-transform: ${({ theme }) => (theme.paymentview ? 'uppercase' : 'none')};
     box-shadow: ${({ theme }) => (theme.paymentview ? 'none' : `7px 7px 35px -12px ${(theme.backtype === 'secondary' ? theme.color.darkshadow : theme.color.lightshadow)}`)};
     overflow: hidden;
 

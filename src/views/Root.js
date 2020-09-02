@@ -1,3 +1,4 @@
+/* eslint-disable react/state-in-constructor */
 import React from 'react';
 import RootTemplate from 'templates/RootTemplate';
 import {
@@ -11,6 +12,7 @@ import CalendarView from 'views/CalendarView';
 import PaymentView from 'views/PaymentView';
 import TestView3 from 'views/TestsViews/TestView3';
 import MonthView from 'views/MonthView';
+import DaysView from 'views/DaysView';
 import DataUpdater from 'assets/data/DataUpdater';
 import AppContext from 'context';
 
@@ -44,22 +46,22 @@ class Root extends React.Component {
 
   handleMonthShift = (shift) => {
     const { currentTime, monthShift } = this.state;
-    let calculatedMonth = currentTime.getMonth() + monthShift + shift + 1200;
-    let calendarCalculatedMonth = calculatedMonth % 12;
-    let calculatedYear = currentTime.getFullYear() + Math.floor((calculatedMonth -1200 )/12);
-    let displiedDate = new Date(calculatedYear, calendarCalculatedMonth);
-    this.setState(prevState => ({
+    const calculatedMonth = currentTime.getMonth() + monthShift + shift + 1200;
+    const calendarCalculatedMonth = calculatedMonth % 12;
+    const calculatedYear = currentTime.getFullYear() + Math.floor((calculatedMonth - 1200) / 12);
+    const displiedDate = new Date(calculatedYear, calendarCalculatedMonth);
+    this.setState((prevState) => ({
       monthShift: prevState.monthShift + shift,
-      displiedDate: displiedDate,
+      displiedDate,
     }));
     if (shift === 0) {
-      this.setState(prevState => ({
+      this.setState((prevState) => ({
         monthShift: 0,
         displiedDate: new Date(prevState.currentTime.getFullYear(), prevState.currentTime.getMonth()),
       }));
     }
   }
-  
+
   render() {
     const contextElements = {
       ...this.state,
@@ -78,6 +80,7 @@ class Root extends React.Component {
                 <Route path={routes.calendar} component={CalendarView} />
                 <Route path={routes.test3} component={TestView3} />
                 <Route path={routes.month} component={MonthView} />
+                <Route path={routes.day} component={DaysView} />
                 <Route path={routes.payment} component={PaymentView} />
               </Switch>
             </RootTemplate>

@@ -8,7 +8,6 @@ import Navigation from 'components/organisms/Navigation/Navigation';
 import SectionTemplate from 'templates/SectionTemplate';
 import waveUpLightImage from 'assets/icons/waveuplight.svg';
 import NavWave from 'components/atoms/NavWave/NavWave';
-import MonthsTitle from 'components/molecules/MonthsTitle/MonthsTitle';
 import Button from 'components/atoms/Button/Button';
 import withContext from 'hoc/withContext';
 import { Link } from 'react-router-dom';
@@ -25,25 +24,25 @@ const StyledLeftBox = styled.div`
   padding-right: 15px;
 `;
 
-const MonthView = ({ allPayments, context: { displiedDate } }) => (
+const DaysView = ({ allPayments, match: { params: { dayId } } }) => (
   <>
     <SectionTemplate nav={1}>
       <Navigation />
     </SectionTemplate>
     <NavWave image={waveUpLightImage} />
     <SectionTemplate
-      sectionname="month's details:"
+      sectionname="days's details:"
       backtype="secondary"
     >
       <StyledLeftBox>
-        <MonthsTitle short={1} />
         <StyledLink to="/calendar"><Button>go back</Button></StyledLink>
       </StyledLeftBox>
       <CardsTemplate>
         {
           allPayments
-            .filter((payment) => new Date(payment.deadline).getFullYear() === new Date(displiedDate).getFullYear())
-            .filter((payment) => new Date(payment.deadline).getMonth() === new Date(displiedDate).getMonth())
+            .filter((payment) => new Date(payment.deadline).getFullYear() === new Date(dayId * 1).getFullYear())
+            .filter((payment) => new Date(payment.deadline).getMonth() === new Date(dayId * 1).getMonth())
+            .filter((payment) => new Date(payment.deadline).getDate() === new Date(dayId * 1).getDate())
             .map((payment) => (
               <Card
                 key={payment.id}
@@ -64,13 +63,17 @@ const MonthView = ({ allPayments, context: { displiedDate } }) => (
   </>
 );
 
-MonthView.propTypes = {
+DaysView.propTypes = {
   allPayments: PropTypes.arrayOf(PropTypes.object).isRequired,
-  context: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.number, PropTypes.func])).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      dayId: PropTypes.string.isRequired,
+    }),
+  }).isRequired,
 };
 
 const mapStateToProps = (state) => ({
   allPayments: state.payments,
 });
 
-export default connect(mapStateToProps)(withContext(MonthView));
+export default connect(mapStateToProps)(withContext(DaysView));

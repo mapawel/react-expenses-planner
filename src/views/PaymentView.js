@@ -8,7 +8,6 @@ import waveUpImage from 'assets/icons/waveup.svg';
 import NavWave from 'components/atoms/NavWave/NavWave';
 import withContext from 'hoc/withContext';
 import Button from 'components/atoms/Button/Button';
-import moneyIcon from 'assets/icons/money.svg';
 import Card from 'components/molecules/Card/Card';
 
 const StyledCardWrapper = styled.div`
@@ -60,12 +59,26 @@ const PaymentView = ({ allPayments, match: { params: { paymentId } }, history: {
         <Button>add similar payment</Button>
         <Button>edit this payment</Button>
         <Button
-        onClick={goBack}
-        >go back</Button>
+          onClick={goBack}
+        >
+          go back
+        </Button>
       </StyledButtonsWrapper>
     </SectionTemplate>
   </>
 );
+
+PaymentView.propTypes = {
+  allPayments: PropTypes.arrayOf(PropTypes.object).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      paymentId: PropTypes.string.isRequired,
+    }),
+  }).isRequired,
+  history: PropTypes.shape({
+    goBack: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
 const mapStateToProps = (state) => ({
   allPayments: state.payments,
