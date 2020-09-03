@@ -44,6 +44,7 @@ const PaymentView = ({ allPayments, match: { params: { paymentId } }, history: {
           .filter((payment) => payment.id === paymentId * 1)
           .map((payment) => (
             <Card
+              id={payment.id}
               key={payment.id}
               category={payment.category}
               title={payment.title}

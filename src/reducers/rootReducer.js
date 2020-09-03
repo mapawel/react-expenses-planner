@@ -1,14 +1,14 @@
 const initialState = {
   payments: [],
-}
+};
 
 const rootReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case 'UPDATE_DEADLINES':
       return {
         ...state,
-        payments: payload
-      }
+        payments: payload,
+      };
     default:
       return state;
   }

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import CalendarDay from 'components/molecules/CalendarDay/CalendarDay';
 import withContext from 'hoc/withContext';
@@ -78,5 +79,13 @@ class Calendar extends React.Component {
     );
   }
 }
+
+Calendar.propTypes = {
+  context: PropTypes.shape({
+    displiedDate: PropTypes.instanceOf(Date).isRequired,
+    currentTime: PropTypes.instanceOf(Date).isRequired,
+    handleMonthShift: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
 export default withContext(Calendar);

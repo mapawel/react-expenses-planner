@@ -31,7 +31,7 @@ const StyledUlList = styled.ul`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: ${({ theme }) => theme.backtype === 'secondary' ? theme.color.darkblue : theme.color.lightblue};
+    background-color: ${({ theme }) => (theme.backtype === 'secondary' ? theme.color.darkblue : theme.color.lightblue)};
     transition: transform .2s;
     transform: translateY(${({ isMenuOpen }) => (isMenuOpen ? '0' : '-100vh')});
    
@@ -64,7 +64,7 @@ const StyledNavLink = styled(NavLink)`
   text-decoration: none;
   font-size: ${({ theme }) => theme.fontSize.xl};
   font-weight: ${({ theme }) => theme.fontWeight.normal};
-  color: ${({ theme }) => theme.backtype === 'secondary' ? theme.color.white : theme.color.darkblue};
+  color: ${({ theme }) => (theme.backtype === 'secondary' ? theme.color.white : theme.color.darkblue)};
 
   & div {
     .navBckTrimLeft, .navBckTrimRight{
@@ -87,13 +87,13 @@ const StyledNavLink = styled(NavLink)`
     }
 
     &.active>div{
-      background-color: ${({ theme }) => theme.backtype === 'secondary' ? theme.color.white : theme.color.darkblue};
+      background-color: ${({ theme }) => (theme.backtype === 'secondary' ? theme.color.white : theme.color.darkblue)};
       .navIconElement{
-        color: ${({ theme }) => theme.backtype === 'secondary' ? theme.color.darkblue : theme.color.white};
+        color: ${({ theme }) => (theme.backtype === 'secondary' ? theme.color.darkblue : theme.color.white)};
       }
       .navBckTrimLeft, .navBckTrimRight{
         display: block;
-        color: ${({ theme }) => theme.backtype === 'secondary' ? theme.color.white : theme.color.darkblue};
+        color: ${({ theme }) => (theme.backtype === 'secondary' ? theme.color.white : theme.color.darkblue)};
       }
       .navBckTrimLeft{
         left: -23px;
@@ -106,7 +106,7 @@ const StyledNavLink = styled(NavLink)`
 `;
 
 const StyledSvg = styled(ReactSVG)`
-  color: ${({ theme }) => theme.backtype === 'secondary' ? theme.color.white : theme.color.darkblue};
+  color: ${({ theme }) => (theme.backtype === 'secondary' ? theme.color.white : theme.color.darkblue)};
   width: 60px;
   padding: 15px;
 `;
@@ -128,7 +128,7 @@ class Navigation extends React.Component {
     isMenuOpen: false,
   }
 
-  componentDidMount(){
+  componentDidMount() {
     document.body.style.overflowY = 'auto';
   }
 

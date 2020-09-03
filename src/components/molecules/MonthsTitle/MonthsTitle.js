@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 import styled from 'styled-components';
 import Button from 'components/atoms/Button/Button';
@@ -31,7 +32,7 @@ const StyledWrapper = styled.div`
       height: 100%;
       top: 0;
       left: 0;
-      background-color: ${({ theme }) => (theme.backtype === 'secondary') ? theme.color.darkblue : theme.color.white};
+      background-color: ${({ theme }) => ((theme.backtype === 'secondary') ? theme.color.darkblue : theme.color.white)};
       opacity: .87;
     }
 `;
@@ -83,12 +84,12 @@ const MonthsTitle = ({ allPayments, short, context: { handleMonthShift, displied
     .filter((payment) => new Date(payment.deadline).getMonth() === new Date(displiedDate).getMonth())
     .filter((payment) => new Date(payment.deadline).getDate() === new Date(currentTime).getDate())
     .filter((payment) => payment.closed === false)
-    .forEach((payment) => sumTotalDay += payment.ammount);
+    .forEach((payment) => { sumTotalDay += payment.ammount; });
   allPayments
     .filter((payment) => new Date(payment.deadline).getFullYear() === new Date(displiedDate).getFullYear())
     .filter((payment) => new Date(payment.deadline).getMonth() === new Date(displiedDate).getMonth())
     .filter((payment) => payment.closed === false)
-    .forEach((payment) => sumToPayMonth += payment.ammount);
+    .forEach((payment) => { sumToPayMonth += payment.ammount; });
 
   return (
     <StyledWrapper short={short}>
@@ -117,21 +118,35 @@ const MonthsTitle = ({ allPayments, short, context: { handleMonthShift, displied
         <>
           <StyledParagraph>
             still to pay
-          {' '}
+            {' '}
             <br />
             <StyledSpan>{sumToPayMonth}</StyledSpan>
-          pln
-        </StyledParagraph>
+            pln
+          </StyledParagraph>
           <Paragraph small style={{ textAlign: 'center', marginBottom: '20px', zIndex: '1' }}>this month</Paragraph>
           <StyledParagraph>
             <StyledSpan>{sumTotalDay}</StyledSpan>
-          pln
-        </StyledParagraph>
+            pln
+          </StyledParagraph>
           <Paragraph small style={{ textAlign: 'center', zIndex: '1' }}>today</Paragraph>
         </>
       )}
     </StyledWrapper>
   );
+};
+
+MonthsTitle.propTypes = {
+  short: PropTypes.oneOf([0, 1]),
+  allPayments: PropTypes.arrayOf(PropTypes.object).isRequired,
+  context: PropTypes.shape({
+    displiedDate: PropTypes.instanceOf(Date).isRequired,
+    currentTime: PropTypes.instanceOf(Date).isRequired,
+    handleMonthShift: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
+MonthsTitle.defaultProps = {
+  short: 0,
 };
 
 const mapStateToProps = ({ payments }) => ({

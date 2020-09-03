@@ -1,6 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
-import { keyframes, css } from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
+import PropTypes from 'prop-types';
 
 const upperLineAnim = keyframes`
   from {
@@ -36,30 +36,36 @@ const StyledBurgerButton = styled.button`
         width: 60%;
         left: 50%;
         top: 50%;
-        background-color: ${({ theme }) => theme.backtype === 'secondary' ? theme.color.white : theme.color.darkblue};
+        background-color: ${({ theme }) => (theme.backtype === 'secondary' ? theme.color.white : theme.color.darkblue)};
     }
     ::after{
         transform: translate(-50%, 7px);
         ${({ isMenuOpen }) => isMenuOpen && css`
         animation: ${lowerLineAnim} .2s forwards;
         `
-        }
+}
     }
     ::before{
         transform: translate(-50%, -7px);
         ${({ isMenuOpen }) => isMenuOpen && css`
         animation: ${upperLineAnim} .2s forwards;
         `
-        }
+}
     }
 `;
 
 const BurgerButton = ({ className, onClick, isMenuOpen }) => (
-    <StyledBurgerButton
+  <StyledBurgerButton
     onClick={onClick}
     isMenuOpen={isMenuOpen}
     className={className}
-    />
+  />
 );
+
+BurgerButton.propTypes = {
+  className: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+  isMenuOpen: PropTypes.bool.isRequired,
+};
 
 export default BurgerButton;

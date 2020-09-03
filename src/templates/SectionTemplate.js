@@ -49,7 +49,17 @@ const SectionTemplate = ({
 
 SectionTemplate.propTypes = {
   children: PropTypes.node.isRequired,
+  backtype: PropTypes.string,
+  sectionname: PropTypes.string,
+  nav: PropTypes.oneOf([0, 1]),
+  paymentview: PropTypes.oneOf([0, 1]),
+};
 
+SectionTemplate.defaultProps = {
+  backtype: null,
+  sectionname: null,
+  nav: 0,
+  paymentview: 0,
 };
 
 export default SectionTemplate;

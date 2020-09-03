@@ -1,9 +1,10 @@
 import React from 'react';
 import moment from 'moment';
 import styled, { css } from 'styled-components';
+import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
-import Paragraph from 'components/atoms/Paragraph/Paragraph';
 import { connect } from 'react-redux';
+import Paragraph from 'components/atoms/Paragraph/Paragraph';
 import DetectableOverflow from 'react-detectable-overflow';
 
 const StyledWrapper = styled.div`
@@ -87,7 +88,7 @@ class CalendarDay extends React.Component {
       .filter((payment) => new Date(payment.deadline).getMonth() === new Date(day).getMonth())
       .filter((payment) => new Date(payment.deadline).getDate() === new Date(day).getDate())
       .filter((payment) => payment.closed === false)
-      .forEach((payment) => sum += payment.ammount);
+      .forEach((payment) => { sum += payment.ammount; });
     const redirectPath = new Date(day).getTime();
     return (
       <>
@@ -138,6 +139,11 @@ class CalendarDay extends React.Component {
     );
   }
 }
+
+CalendarDay.propTypes = {
+  day: PropTypes.instanceOf(Date).isRequired,
+  allPayments: PropTypes.arrayOf(Object).isRequired,
+};
 
 const mapStateToProps = ({ payments }) => ({
   allPayments: payments,

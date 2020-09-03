@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ReactSVG } from 'react-svg';
@@ -35,7 +36,7 @@ const StyledSvg = styled(ReactSVG)`
     display: ${({ resetmargin }) => (resetmargin ? 'flex' : 'block')};
     justify-content: center;
     margin-right: ${({ resetmargin }) => (resetmargin ? '0' : '10px')};
-    color: ${({ theme }) => theme.backtype === 'secondary' ? theme.color.white : theme.color.darkgrey};
+    color: ${({ theme }) => (theme.backtype === 'secondary' ? theme.color.white : theme.color.darkgrey)};
 
     ${({ round }) => round && css`
     color: ${({ theme }) => theme.color.darkblue};
@@ -68,8 +69,9 @@ Button.propTypes = {
 Button.defaultProps = {
   children: null,
   icon: null,
-  round: null,
-  resetmargin: null,
+  round: 0,
+  resetmargin: 0,
+  className: null,
 };
 
 export default Button;

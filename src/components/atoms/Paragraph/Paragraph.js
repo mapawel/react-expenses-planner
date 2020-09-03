@@ -18,6 +18,6 @@ const Paragraph = styled.p`
         font-size: ${({ theme }) => theme.fontSize.l};
     `
 }
-
 `;
+
 export default Paragraph;

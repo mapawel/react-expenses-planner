@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -31,7 +32,7 @@ const DataUpdater = ({ updateFn }) => {
       else if (index >= 2 && index < 4) payment.deadline = getToday();
       else payment.deadline = getFutureDeadline();
     });
-    updatedPayments.sort((a, b) => a.deadline - b.deadline)
+    updatedPayments.sort((a, b) => a.deadline - b.deadline);
     updateFn(updatedPayments);
   };
 

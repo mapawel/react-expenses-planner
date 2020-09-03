@@ -30,6 +30,6 @@ const HeroCardImage = styled.div`
         background: radial-gradient(circle, ${({ theme }) => theme.color.gradientBlackStart} 50%, ${({ theme }) => theme.color.gradientBlackFinish} 100%), ${({ theme }) => theme.color.blendBlack};
     }
     `
-    }
+}
 `;
 export default HeroCardImage;

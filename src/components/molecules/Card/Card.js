@@ -160,18 +160,18 @@ const StyledDateParagraph = styled(Paragraph)`
 const Card = ({
   id, category, title, ammount, description, deadline, cycle, paidAmmount, closed,
 }) => (
-    <StyledWrapper>
-      <StyledTitleWrapper>
-        {closed && <StyledBlend />}
-        <StyledTitleParagraph big>{title}</StyledTitleParagraph>
-        <StyledLine />
-        <StyledTitleParagraph big closed={closed}>
-          {ammount}
-          <StylenSpanPln>
+  <StyledWrapper>
+    <StyledTitleWrapper>
+      {closed && <StyledBlend />}
+      <StyledTitleParagraph big>{title}</StyledTitleParagraph>
+      <StyledLine />
+      <StyledTitleParagraph big closed={closed}>
+        {ammount}
+        <StylenSpanPln>
             &nbsp;pln
         </StylenSpanPln>
-        </StyledTitleParagraph>
-        {closed
+      </StyledTitleParagraph>
+      {closed
           && (
             <StyledPaidTxt big>
               {paidAmmount}
@@ -180,51 +180,56 @@ const Card = ({
               </StylenSpanPln>
             </StyledPaidTxt>
           )}
-      </StyledTitleWrapper>
-      <StyledInnerWrapper>
-        {closed && <StyledBlend />}
-        <HeroCardImage category={category}>
-          <StyledImageHeader uppercase>{category}</StyledImageHeader>
-        </HeroCardImage>
-        <StyledTextWrapper>
+    </StyledTitleWrapper>
+    <StyledInnerWrapper>
+      {closed && <StyledBlend />}
+      <HeroCardImage category={category}>
+        <StyledImageHeader uppercase>{category}</StyledImageHeader>
+      </HeroCardImage>
+      <StyledTextWrapper>
 
-          <StyledBoxWhenPayment>
-            <StyledTitleParagraph big>{title}</StyledTitleParagraph>
-            <StyledTitleParagraph big>
-              {ammount}
-              <StylenSpanPln>
+        <StyledBoxWhenPayment>
+          <StyledTitleParagraph big>{title}</StyledTitleParagraph>
+          <StyledTitleParagraph big>
+            {ammount}
+            <StylenSpanPln>
                 &nbsp;pln
             </StylenSpanPln>
-            </StyledTitleParagraph>
-          </StyledBoxWhenPayment>
+          </StyledTitleParagraph>
+        </StyledBoxWhenPayment>
 
-          <Paragraph small>description:</Paragraph>
-          <StyledParagraph>{description}</StyledParagraph>
-          <Paragraph small>deadline:</Paragraph>
-          <StyledDateParagraph>{new Date(deadline).toLocaleDateString()}</StyledDateParagraph>
-          <Paragraph small>cycle:</Paragraph>
-          <StyledParagraph>{cycle}</StyledParagraph>
-        </StyledTextWrapper>
-        <StyledButtonsWrapper>
-          <Button round={1} icon={moneyIcon} />
-          <Link to={`/payment/${id}`}><Button round={1} icon={infoIcon} /></Link>
-        </StyledButtonsWrapper>
-      </StyledInnerWrapper>
-    </StyledWrapper>
-  );
+        <Paragraph small>description:</Paragraph>
+        <StyledParagraph>{description}</StyledParagraph>
+        <Paragraph small>deadline:</Paragraph>
+        <StyledDateParagraph>{new Date(deadline).toLocaleDateString()}</StyledDateParagraph>
+        <Paragraph small>cycle:</Paragraph>
+        <StyledParagraph>{cycle}</StyledParagraph>
+      </StyledTextWrapper>
+      <StyledButtonsWrapper>
+        <Button round={1} icon={moneyIcon} />
+        <Link to={`/payment/${id}`}><Button round={1} icon={infoIcon} /></Link>
+      </StyledButtonsWrapper>
+    </StyledInnerWrapper>
+  </StyledWrapper>
+);
 
 Card.propTypes = {
+  id: PropTypes.number.isRequired,
   category: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   ammount: PropTypes.number.isRequired,
+  paidAmmount: PropTypes.number,
   description: PropTypes.string,
   deadline: PropTypes.number.isRequired,
   cycle: PropTypes.string,
+  closed: PropTypes.bool,
 };
 
 Card.defaultProps = {
   description: '-',
   cycle: '-',
+  closed: false,
+  paidAmmount: 0,
 };
 
 export default Card;

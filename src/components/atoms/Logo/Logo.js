@@ -10,14 +10,14 @@ const StyledLogoWrappper = styled.div`
 `;
 
 const StyledLogoText = styled.h1`
-    font-weight: ${({theme}) => theme.fontWeight.normal};
+    font-weight: ${({ theme }) => theme.fontWeight.normal};
     font-size: 2.4rem;
     margin-left: 15px;
     letter-spacing: 1.5px;
     line-height: 1.2;
-    color: ${({ theme }) => theme.backtype === 'secondary' ? theme.color.white : theme.color.darkblue};
+    color: ${({ theme }) => (theme.backtype === 'secondary' ? theme.color.white : theme.color.darkblue)};
     span {
-        font-weight: ${({theme}) => theme.fontWeight.bold};
+        font-weight: ${({ theme }) => theme.fontWeight.bold};
         letter-spacing: 5px;
         line-height: .8;
     }
@@ -26,7 +26,7 @@ const StyledLogoText = styled.h1`
 const StyledSvg = styled(ReactSVG)`
   height: 35px;
   width: 30px;
-  color: ${({ theme }) => theme.backtype === 'secondary' ? theme.color.white : theme.color.darkblue};
+  color: ${({ theme }) => (theme.backtype === 'secondary' ? theme.color.white : theme.color.darkblue)};
 `;
 
 const Logo = () => (

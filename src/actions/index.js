@@ -1,4 +1,4 @@
 export const updateDeadlineDates = (updatedArray) => ({
-    type: "UPDATE_DEADLINES",
-    payload: updatedArray,
-})
+  type: 'UPDATE_DEADLINES',
+  payload: updatedArray,
+});
