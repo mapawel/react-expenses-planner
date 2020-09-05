@@ -8,7 +8,7 @@ import { routes } from 'routes';
 
 const RootTemplate = ({ children, location: { pathname } }) => {
   let darkbody = false;
-  if (routes.month.includes(pathname.split('/')[1]) || routes.day.includes(pathname.split('/')[1])) darkbody = true;
+  if (routes.month.includes(pathname.split('/')[1]) || routes.day.includes(pathname.split('/')[1]) || routes.addnew.includes(pathname.split('/')[1])) darkbody = true;
   return (
     <ThemeProvider theme={{ ...mainTheme, darkbody }}>
       <>

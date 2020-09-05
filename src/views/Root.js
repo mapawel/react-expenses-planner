@@ -13,6 +13,7 @@ import PaymentView from 'views/PaymentView';
 import TestView3 from 'views/TestsViews/TestView3';
 import MonthView from 'views/MonthView';
 import DaysView from 'views/DaysView';
+import AddPaymentView from 'views/AddPaymentView';
 import DataUpdater from 'assets/data/DataUpdater';
 import AppContext from 'context';
 
@@ -82,6 +83,7 @@ class Root extends React.Component {
                 <Route path={routes.month} component={MonthView} />
                 <Route path={routes.day} component={DaysView} />
                 <Route path={routes.payment} component={PaymentView} />
+                <Route path={routes.addnew} component={AddPaymentView} />
               </Switch>
             </RootTemplate>
           </AppContext.Provider>

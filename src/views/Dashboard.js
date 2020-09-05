@@ -30,6 +30,7 @@ class Dashboard extends React.Component {
         <NavWave image={waveUpImage} />
         <SectionTemplate
           sectionname="still to pay in this month:"
+          addButton={1}
         >
           <MonthsTitle />
           <CardsTemplate>

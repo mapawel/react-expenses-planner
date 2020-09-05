@@ -146,7 +146,7 @@ MonthsTitle.propTypes = {
 };
 
 MonthsTitle.defaultProps = {
-  short: 0,
+  short: null,
 };
 
 const mapStateToProps = ({ payments }) => ({
