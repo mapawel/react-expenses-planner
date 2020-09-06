@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import Paragraph from 'components/atoms/Paragraph/Paragraph';
 import { inputMixin } from 'components/atoms/Input/inputMixin';
+import DatePicker from 'react-date-picker/dist/entry.nostyle';
+import 'components/atoms/Input/datePiskerStyle.css';
 
 const StyledWrapper = styled.div`
     display: flex;
@@ -13,7 +15,9 @@ const StyledInputContainer = styled.div`
     width: 100%;
     position: relative;
     z-index: 0;
-    overflow: hidden;
+    &:focus-within {
+      z-index: 1;
+    }
 `;
 
 const StyledSelect = styled.select`
@@ -61,10 +65,11 @@ const StyledInputHeader = styled(Paragraph)`
 `;
 
 const Input = ({
-  select, textarea, id, onChange, value, labelTxt, children, className, name
+  select, textarea, id, onChange, value, labelTxt, children, className, name, minDate, locale, datepicker, format
 }) => {
   let Tag = select ? StyledSelect : StyledInput;
   Tag = textarea ? StyledTextArea : Tag;
+  Tag = datepicker ? DatePicker : Tag;
   const options = select ? select.map((select) => <StyledOption key={select} value={select}>{select}</StyledOption>) : null;
 
   return (
@@ -84,6 +89,9 @@ const Input = ({
           autoComplete="off"
           onChange={onChange}
           value={value}
+          minDate={minDate}
+          locale={locale}
+          format={format}
         >
           {select && options}
 

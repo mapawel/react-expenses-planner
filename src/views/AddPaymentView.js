@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import SectionTemplate from 'templates/SectionTemplate';
@@ -7,6 +7,8 @@ import Button from 'components/atoms/Button/Button';
 import Header from 'components/atoms/Header/Header';
 import Input from 'components/atoms/Input/Input';
 import { dataShape } from 'assets/data/dataShape';
+import { addNewPayment } from 'actions';
+import { connect } from 'react-redux';
 
 const StyledWrapper = styled.div`
     width: 100%;
@@ -28,6 +30,9 @@ const StyledForm = styled.form`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    & > div:nth-of-type(4) {
+      z-index: 4;
+    }
 `;
 
 const StyledButtonsBox = styled.div`
@@ -50,9 +55,15 @@ const StyledLink = styled(Link)`
   text-decoration: none;
 `;
 
-class AddPaymentView extends Component {
+const StyledDataPickerBox = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+class AddPaymentView extends React.Component {
   state = {
-    [dataShape.category]: '',
+    [dataShape.category]: '---',
     [dataShape.title]: '',
     [dataShape.description]: '',
     [dataShape.ammount]: '',
@@ -61,14 +72,25 @@ class AddPaymentView extends Component {
   };
 
   handleInputChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value,
-    })
+    const changedInput = e.target;
+    this.setState(() => {
+      let changedInputValue = changedInput.value;
+      if (changedInput.name === dataShape.ammount) changedInputValue = changedInput.value * 1;
+      return { [changedInput.name]: changedInputValue };
+    });
   };
 
+  handleDeadlineInputChange = (date) => {
+    this.setState({
+      [dataShape.deadline]: date,
+    });
+  }
+
   render() {
-    const { history: { goBack } } = this.props;
-    const { [dataShape.category]: category, [dataShape.title]: title, [dataShape.description]: description, [dataShape.ammount]: ammount, [dataShape.deadline]: deadline, [dataShape.cycle]: cycle } = this.state;
+    const { history: { goBack }, addNewPaymentFn } = this.props;
+    const {
+      [dataShape.category]: category, [dataShape.title]: title, [dataShape.description]: description, [dataShape.ammount]: ammount, [dataShape.deadline]: deadline, [dataShape.cycle]: cycle,
+    } = this.state;
     return (
       <SectionTemplate backtype="secondary">
         <StyledWrapper>
@@ -76,11 +98,11 @@ class AddPaymentView extends Component {
             <Logo />
             <Button round={1} />
           </StyledHead>
-          <StyledForm>
+          <StyledForm onSubmit={(e) => e.preventDefault()}>
             <StyledHeader>add a new payment:</StyledHeader>
 
             <StyledInput
-              select={['---', ...dataShape.categories.map(category => [category])]}
+              select={['---', ...dataShape.categories.map((category) => [category])]}
               name={dataShape.category}
               id={dataShape.category}
               onChange={(e) => this.handleInputChange(e)}
@@ -111,13 +133,16 @@ class AddPaymentView extends Component {
             </StyledInput>
 
             <StyledInput
-              name={dataShape.deadline}
-              id={dataShape.deadline}
-              onChange={(e) => this.handleInputChange(e)}
-              value={deadline}
-              labelTxt="choose date"
+                datepicker
+                name={dataShape.deadline}
+                id={dataShape.deadline}
+                onChange={this.handleDeadlineInputChange}
+                value={deadline}
+                minDate={new Date()}
+                locale="en-EN"
+                format="dd/MM/y"
             >
-              payment's deadline:
+              choose deadline:
             </StyledInput>
 
             <StyledInput
@@ -142,9 +167,11 @@ class AddPaymentView extends Component {
             </StyledInput>
 
             <StyledButtonsBox>
-              <Button>add</Button>
               <Button
-                onClick={(e) => { e.preventDefault(); goBack(); }}
+              onClick={() => addNewPaymentFn(this.state)}
+              >add</Button>
+              <Button
+                onClick={goBack}
               >
                 go back
               </Button>
@@ -156,4 +183,8 @@ class AddPaymentView extends Component {
   }
 }
 
-export default AddPaymentView;
+const mapDispatchToProps = (dispatch) => (
+  {addNewPaymentFn: (newPayment) => dispatch(addNewPayment(newPayment))}
+)
+
+export default connect(null, mapDispatchToProps)(AddPaymentView);

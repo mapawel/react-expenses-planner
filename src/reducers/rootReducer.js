@@ -9,6 +9,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         payments: payload,
       };
+    case 'ADD_PAYMENT':
+      return {
+        ...state,
+        payments: [...state.payments, payload],
+      };
     default:
       return state;
   }
