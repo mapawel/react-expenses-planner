@@ -9,6 +9,8 @@ import Input from 'components/atoms/Input/Input';
 import { dataShape } from 'assets/data/dataShape';
 import { addNewPayment } from 'actions';
 import { connect } from 'react-redux';
+import { Formik } from 'formik';
+import { validatorSchema } from 'validatorSchema/validatorSchema';
 
 const StyledWrapper = styled.div`
     width: 100%;
@@ -51,62 +53,48 @@ const StyledInput = styled(Input)`
   margin-bottom: 20px;
 `;
 
-const StyledLink = styled(Link)`
-  text-decoration: none;
-`;
+const AddPaymentView = ({ history: { goBack }, addNewPaymentFn, ...props }) => (
+  <SectionTemplate backtype="secondary">
+    <StyledWrapper>
+      <StyledHead>
+        <Logo />
+        <Button round={1} />
+      </StyledHead>
 
-const StyledDataPickerBox = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-`;
+      <Formik
+        initialValues={{
+          [dataShape.category]: '', [dataShape.title]: '', [dataShape.ammount]: '', [dataShape.deadline]: '', [dataShape.cycle]: '', [dataShape.description]: '',
+        }}
+          // validationSchema={validatorSchema}
+        onSubmit={
+            (values, { setSubmitting }) => {
+              console.log(values);
+              addNewPaymentFn(values);
+              setTimeout(() => {
+                setSubmitting(false);
+              }, 400);
+            }
+          }
+      >
+        {({
+          values,
+          handleChange,
+          handleSubmit,
+          isSubmitting,
+          setFieldValue,
+        }) => (
 
-class AddPaymentView extends React.Component {
-  state = {
-    [dataShape.category]: '---',
-    [dataShape.title]: '',
-    [dataShape.description]: '',
-    [dataShape.ammount]: '',
-    [dataShape.deadline]: '',
-    [dataShape.cycle]: '',
-  };
-
-  handleInputChange = (e) => {
-    const changedInput = e.target;
-    this.setState(() => {
-      let changedInputValue = changedInput.value;
-      if (changedInput.name === dataShape.ammount) changedInputValue = changedInput.value * 1;
-      return { [changedInput.name]: changedInputValue };
-    });
-  };
-
-  handleDeadlineInputChange = (date) => {
-    this.setState({
-      [dataShape.deadline]: date,
-    });
-  }
-
-  render() {
-    const { history: { goBack }, addNewPaymentFn } = this.props;
-    const {
-      [dataShape.category]: category, [dataShape.title]: title, [dataShape.description]: description, [dataShape.ammount]: ammount, [dataShape.deadline]: deadline, [dataShape.cycle]: cycle,
-    } = this.state;
-    return (
-      <SectionTemplate backtype="secondary">
-        <StyledWrapper>
-          <StyledHead>
-            <Logo />
-            <Button round={1} />
-          </StyledHead>
-          <StyledForm onSubmit={(e) => e.preventDefault()}>
+          <StyledForm
+            onSubmit={(e) => e.preventDefault()}
+          >
             <StyledHeader>add a new payment:</StyledHeader>
 
             <StyledInput
               select={['---', ...dataShape.categories.map((category) => [category])]}
               name={dataShape.category}
               id={dataShape.category}
-              onChange={(e) => this.handleInputChange(e)}
-              value={category}
+              onChange={handleChange}
+              value={values[dataShape.category]}
               labelTxt="choose category"
             >
               payment's category:
@@ -115,8 +103,8 @@ class AddPaymentView extends React.Component {
             <StyledInput
               name={dataShape.title}
               id={dataShape.title}
-              onChange={(e) => this.handleInputChange(e)}
-              value={title}
+              onChange={handleChange}
+              value={values[dataShape.title]}
               labelTxt="short title"
             >
               payment's title:
@@ -125,22 +113,24 @@ class AddPaymentView extends React.Component {
             <StyledInput
               name={dataShape.ammount}
               id={dataShape.ammount}
-              onChange={(e) => this.handleInputChange(e)}
-              value={ammount}
+              onChange={handleChange}
+              value={values[dataShape.ammount]}
               labelTxt="value"
             >
               planned ammount:
             </StyledInput>
 
             <StyledInput
-                datepicker
-                name={dataShape.deadline}
-                id={dataShape.deadline}
-                onChange={this.handleDeadlineInputChange}
-                value={deadline}
-                minDate={new Date()}
-                locale="en-EN"
-                format="dd/MM/y"
+              datepicker
+              name={dataShape.deadline}
+              id={dataShape.deadline}
+              onChange={(val) => {
+                setFieldValue([dataShape.deadline], val);
+              }}
+              value={values[dataShape.deadline]}
+              minDate={new Date()}
+              locale="en-EN"
+              format="dd/MM/y"
             >
               choose deadline:
             </StyledInput>
@@ -148,8 +138,8 @@ class AddPaymentView extends React.Component {
             <StyledInput
               name={dataShape.cycle}
               id={dataShape.cycle}
-              onChange={(e) => this.handleInputChange(e)}
-              value={cycle}
+              onChange={handleChange}
+              value={values[dataShape.cycle]}
               labelTxt="recurrence"
             >
               choose cycle:
@@ -159,8 +149,8 @@ class AddPaymentView extends React.Component {
               textarea={1}
               name={dataShape.description}
               id={dataShape.description}
-              onChange={(e) => this.handleInputChange(e)}
-              value={description}
+              onChange={handleChange}
+              value={values[dataShape.description]}
               labelTxt="some notes"
             >
               description:
@@ -168,8 +158,11 @@ class AddPaymentView extends React.Component {
 
             <StyledButtonsBox>
               <Button
-              onClick={() => addNewPaymentFn(this.state)}
-              >add</Button>
+                onClick={handleSubmit}
+                disabled={isSubmitting}
+              >
+                add
+              </Button>
               <Button
                 onClick={goBack}
               >
@@ -177,14 +170,14 @@ class AddPaymentView extends React.Component {
               </Button>
             </StyledButtonsBox>
           </StyledForm>
-        </StyledWrapper>
-      </SectionTemplate>
-    );
-  }
-}
+        )}
+      </Formik>
+    </StyledWrapper>
+  </SectionTemplate>
+);
 
 const mapDispatchToProps = (dispatch) => (
-  {addNewPaymentFn: (newPayment) => dispatch(addNewPayment(newPayment))}
-)
+  { addNewPaymentFn: (newPayment) => dispatch(addNewPayment(newPayment)) }
+);
 
 export default connect(null, mapDispatchToProps)(AddPaymentView);

@@ -65,7 +65,7 @@ const StyledInputHeader = styled(Paragraph)`
 `;
 
 const Input = ({
-  select, textarea, id, onChange, value, labelTxt, children, className, name, minDate, locale, datepicker, format
+  select, textarea, id, onChange, value, labelTxt, children, className, name, minDate, locale, datepicker, format, selected, field, ...props
 }) => {
   let Tag = select ? StyledSelect : StyledInput;
   Tag = textarea ? StyledTextArea : Tag;
@@ -92,6 +92,9 @@ const Input = ({
           minDate={minDate}
           locale={locale}
           format={format}
+          selected={selected}
+          field={field}
+          {...props}
         >
           {select && options}
 
