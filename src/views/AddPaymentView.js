@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import SectionTemplate from 'templates/SectionTemplate';
 import Logo from 'components/atoms/Logo/Logo';
 import Button from 'components/atoms/Button/Button';
@@ -9,8 +9,9 @@ import Input from 'components/atoms/Input/Input';
 import { dataShape } from 'assets/data/dataShape';
 import { addNewPayment } from 'actions';
 import { connect } from 'react-redux';
-import { Formik } from 'formik';
+import { Formik, ErrorMessage } from 'formik';
 import { validatorSchema } from 'validatorSchema/validatorSchema';
+// import moment from 'moment';
 
 const StyledWrapper = styled.div`
     width: 100%;
@@ -38,10 +39,15 @@ const StyledForm = styled.form`
 `;
 
 const StyledButtonsBox = styled.div`
-margin-top: 40px;
     width: 100%;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-gap: 45px;
+    padding-bottom: 80px;
+    &>button:first-of-type{
+        grid-column-start: 2;
+    }
 `;
 
 const StyledHeader = styled(Header)`
@@ -50,31 +56,70 @@ const StyledHeader = styled(Header)`
 `;
 
 const StyledInput = styled(Input)`
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 `;
 
-const AddPaymentView = ({ history: { goBack }, addNewPaymentFn, ...props }) => (
+const StyledClose = styled.div`
+  width: 30px;
+  height: 30px;
+  position: relative;
+  &::after, &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    height: 100%;
+    width: 1px;
+    background-color: ${({ theme }) => theme.color.darkblue};
+  }
+  &::after{
+    transform: rotate(45deg);
+  }
+  &::before{
+    transform: rotate(-45deg);
+  }
+`;
+
+const StyledError = styled.p`
+  position: absolute;
+  width: 100%;
+  bottom: -20px;
+  left: 20px;
+  font-size: ${({ theme }) => theme.fontSize.m};
+  color: ${({ theme }) => theme.color.white};
+  font-weight: ${({ theme }) => theme.fontWeight.bold};
+  text-decoration: underline;
+`;
+
+const AddPaymentView = ({ history: { goBack }, addNewPaymentFn }) => (
   <SectionTemplate backtype="secondary">
+    {/* {console.log(moment(new Date()).add(2, 'weeks').format('DD/MM/YYYY'))} */}
     <StyledWrapper>
       <StyledHead>
         <Logo />
-        <Button round={1} />
+        <Button
+          round={1}
+          onClick={goBack}
+        >
+          <StyledClose />
+        </Button>
       </StyledHead>
 
       <Formik
         initialValues={{
-          [dataShape.category]: '', [dataShape.title]: '', [dataShape.ammount]: '', [dataShape.deadline]: '', [dataShape.cycle]: '', [dataShape.description]: '',
+          [dataShape.category]: '', [dataShape.title]: '', [dataShape.ammount]: '', [dataShape.deadline]: '', [dataShape.cycle]: undefined, [dataShape.description]: undefined,
         }}
-          // validationSchema={validatorSchema}
+        validationSchema={validatorSchema}
         onSubmit={
-            (values, { setSubmitting }) => {
-              console.log(values);
-              addNewPaymentFn(values);
-              setTimeout(() => {
-                setSubmitting(false);
-              }, 400);
-            }
+          (values, { setSubmitting }) => {
+            addNewPaymentFn(values);
+
+            setTimeout(() => {
+              setSubmitting(false);
+              goBack();
+            }, 200);
           }
+        }
       >
         {({
           values,
@@ -82,6 +127,7 @@ const AddPaymentView = ({ history: { goBack }, addNewPaymentFn, ...props }) => (
           handleSubmit,
           isSubmitting,
           setFieldValue,
+          resetForm,
         }) => (
 
           <StyledForm
@@ -96,8 +142,9 @@ const AddPaymentView = ({ history: { goBack }, addNewPaymentFn, ...props }) => (
               onChange={handleChange}
               value={values[dataShape.category]}
               labelTxt="choose category"
+              headerTxt="payment's category:"
             >
-              payment's category:
+              <ErrorMessage component={StyledError} name={dataShape.category} />
             </StyledInput>
 
             <StyledInput
@@ -106,8 +153,9 @@ const AddPaymentView = ({ history: { goBack }, addNewPaymentFn, ...props }) => (
               onChange={handleChange}
               value={values[dataShape.title]}
               labelTxt="short title"
+              headerTxt="payment's title:"
             >
-              payment's title:
+              <ErrorMessage component={StyledError} name={dataShape.title} />
             </StyledInput>
 
             <StyledInput
@@ -116,12 +164,13 @@ const AddPaymentView = ({ history: { goBack }, addNewPaymentFn, ...props }) => (
               onChange={handleChange}
               value={values[dataShape.ammount]}
               labelTxt="value"
+              headerTxt="planned ammount:"
             >
-              planned ammount:
+              <ErrorMessage component={StyledError} name={dataShape.ammount} />
             </StyledInput>
 
             <StyledInput
-              datepicker
+              datepicker={1}
               name={dataShape.deadline}
               id={dataShape.deadline}
               onChange={(val) => {
@@ -131,8 +180,10 @@ const AddPaymentView = ({ history: { goBack }, addNewPaymentFn, ...props }) => (
               minDate={new Date()}
               locale="en-EN"
               format="dd/MM/y"
+              headerTxt="choose deadline:"
+              clearIcon={null}
             >
-              choose deadline:
+              <ErrorMessage component={StyledError} name={dataShape.deadline} />
             </StyledInput>
 
             <StyledInput
@@ -141,8 +192,9 @@ const AddPaymentView = ({ history: { goBack }, addNewPaymentFn, ...props }) => (
               onChange={handleChange}
               value={values[dataShape.cycle]}
               labelTxt="recurrence"
+              headerTxt="choose cycle:"
             >
-              choose cycle:
+              <ErrorMessage component={StyledError} name={dataShape.cycle} />
             </StyledInput>
 
             <StyledInput
@@ -152,14 +204,21 @@ const AddPaymentView = ({ history: { goBack }, addNewPaymentFn, ...props }) => (
               onChange={handleChange}
               value={values[dataShape.description]}
               labelTxt="some notes"
+              headerTxt="description:"
             >
-              description:
+              <ErrorMessage component={StyledError} name={dataShape.description} />
             </StyledInput>
 
             <StyledButtonsBox>
               <Button
+                onClick={resetForm}
+              >
+                clear form
+              </Button>
+              <Button
                 onClick={handleSubmit}
                 disabled={isSubmitting}
+                type="button"
               >
                 add
               </Button>
@@ -175,6 +234,13 @@ const AddPaymentView = ({ history: { goBack }, addNewPaymentFn, ...props }) => (
     </StyledWrapper>
   </SectionTemplate>
 );
+
+AddPaymentView.propTypes = {
+  history: PropTypes.shape({
+    goBack: PropTypes.func.isRequired,
+  }).isRequired,
+  addNewPaymentFn: PropTypes.func.isRequired,
+};
 
 const mapDispatchToProps = (dispatch) => (
   { addNewPaymentFn: (newPayment) => dispatch(addNewPayment(newPayment)) }

@@ -13,11 +13,13 @@ const StyledWrapper = styled.div`
     & * {
         margin: 5px;
     }
-    & > button:first-of-type{
+    & > a:first-of-type{
+        display: grid;
         grid-row: 3/4;
         grid-column: 1/3;
+        margin: 0;
     }
-    & > a:first-of-type{
+    & > a:nth-of-type(2){
         display: grid;
         grid-row: 4/5;
         grid-column: 1/3;
@@ -36,10 +38,10 @@ const StyledWrapper = styled.div`
 
     @media (min-width: 992px) {
     grid-template-columns: repeat(3, 244px);
-    & > button:first-of-type{
+    & > a:first-of-type{
         grid-column: 1/2;
     }
-    & > a:first-of-type{
+    & > a:nth-of-type(2){
         grid-column: 1/2;
     }
     & > p:first-of-type{

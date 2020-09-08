@@ -227,7 +227,7 @@ Card.propTypes = {
 
 Card.defaultProps = {
   description: '-',
-  cycle: '-',
+  cycle: 'none',
   closed: false,
   paidAmmount: 0,
 };

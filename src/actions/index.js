@@ -9,7 +9,7 @@ export const addNewPayment = (newPaymentObject) => ({
     id: new Date().getTime(),
     category: newPaymentObject.category,
     title: newPaymentObject.title,
-    ammount: newPaymentObject.ammount,
+    ammount: newPaymentObject.ammount * 1,
     paidAmmount: 0,
     closed: false,
     description: newPaymentObject.description,

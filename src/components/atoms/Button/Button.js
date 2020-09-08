@@ -59,7 +59,7 @@ const Button = ({
 );
 
 Button.propTypes = {
-  children: PropTypes.string,
+  children: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   icon: PropTypes.string,
   className: PropTypes.string,
   round: PropTypes.oneOf([0, 1]),

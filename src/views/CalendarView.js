@@ -13,6 +13,7 @@ import GridTemplate from 'templates/GridTemplate';
 import DateHead from 'components/molecules/DateHead/DateHead';
 import InfoHeader from 'components/molecules/InfoHeader/InfoHeader';
 import { Link } from 'react-router-dom';
+import { routes } from 'routes';
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -30,7 +31,7 @@ const CalendarView = ({ context: { displiedDate } }) => {
         <GridTemplate>
           <MonthsTitle short={1} />
           <DateHead />
-          <Button>add new payment</Button>
+          <StyledLink to={routes.addnew}><Button>add new payment</Button></StyledLink>
           <StyledLink to={`/month/${redirectPath}`}><Button>month&apos;s details</Button></StyledLink>
           <InfoHeader>month&apos;s total payments:</InfoHeader>
           <InfoHeader topay={1}>still to pay this month:</InfoHeader>
