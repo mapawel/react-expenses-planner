@@ -39,16 +39,18 @@ class Dashboard extends React.Component {
                 .filter((payment) => new Date(payment.deadline).getFullYear() === currentTime.getFullYear())
                 .filter((payment) => new Date(payment.deadline).getMonth() === currentTime.getMonth())
                 .filter((payment) => payment.closed === false)
-                .map((payment) => (
+                .map(({
+                  id, category, title, ammount, description, deadline, cycle,
+                }) => (
                   <Card
-                    key={payment.id}
-                    id={payment.id}
-                    category={payment.category}
-                    title={payment.title}
-                    ammount={payment.ammount}
-                    description={payment.description}
-                    deadline={payment.deadline}
-                    cycle={payment.cycle}
+                    key={id}
+                    id={id}
+                    category={category}
+                    title={title}
+                    ammount={ammount}
+                    description={description}
+                    deadline={deadline}
+                    cycle={cycle}
                   />
                 ))
             }
@@ -67,16 +69,18 @@ class Dashboard extends React.Component {
                 .filter((payment) => new Date(payment.deadline).getMonth() === currentTime.getMonth())
                 .filter((payment) => new Date(payment.deadline).getDate() === currentTime.getDate())
                 .filter((payment) => payment.closed === false)
-                .map((payment) => (
+                .map(({
+                  id, category, title, ammount, description, deadline, cycle,
+                }) => (
                   <Card
-                    key={payment.id}
-                    id={payment.id}
-                    category={payment.category}
-                    title={payment.title}
-                    ammount={payment.ammount}
-                    description={payment.description}
-                    deadline={payment.deadline}
-                    cycle={payment.cycle}
+                    key={id}
+                    id={id}
+                    category={category}
+                    title={title}
+                    ammount={ammount}
+                    description={description}
+                    deadline={deadline}
+                    cycle={cycle}
                   />
                 ))
             }

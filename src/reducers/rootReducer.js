@@ -12,7 +12,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case 'ADD_PAYMENT':
       return {
         ...state,
-        payments: [...state.payments, payload],
+        payments: [...state.payments, ...payload],
       };
     default:
       return state;

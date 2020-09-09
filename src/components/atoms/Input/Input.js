@@ -72,7 +72,7 @@ const Input = ({
   let Tag = select ? StyledSelect : StyledInput;
   Tag = textarea ? StyledTextArea : Tag;
   Tag = datepicker ? DatePicker : Tag;
-  const options = select ? select.map((sel) => <StyledOption key={sel} value={sel}>{sel}</StyledOption>) : null;
+  const options = select ? select.map((sel) => <StyledOption key={sel} value={sel[0]}>{sel[1]}</StyledOption>) : null;
 
   return (
     <StyledWrapper

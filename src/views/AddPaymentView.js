@@ -15,7 +15,6 @@ import { validatorSchema } from 'validatorSchema/validatorSchema';
 
 const StyledWrapper = styled.div`
     width: 100%;
-
 `;
 
 const StyledHead = styled.div`
@@ -94,6 +93,7 @@ const StyledError = styled.p`
 const AddPaymentView = ({ history: { goBack }, addNewPaymentFn }) => (
   <SectionTemplate backtype="secondary">
     {/* {console.log(moment(new Date()).add(2, 'weeks').format('DD/MM/YYYY'))} */}
+
     <StyledWrapper>
       <StyledHead>
         <Logo />
@@ -107,7 +107,7 @@ const AddPaymentView = ({ history: { goBack }, addNewPaymentFn }) => (
 
       <Formik
         initialValues={{
-          [dataShape.category]: '', [dataShape.title]: '', [dataShape.ammount]: '', [dataShape.deadline]: '', [dataShape.cycle]: undefined, [dataShape.description]: undefined,
+          [dataShape.category]: '', [dataShape.title]: '', [dataShape.ammount]: '', [dataShape.deadline]: '', [dataShape.cycle]: '', [dataShape.description]: '', [dataShape.repeatNumer]: '',
         }}
         validationSchema={validatorSchema}
         onSubmit={
@@ -134,9 +134,8 @@ const AddPaymentView = ({ history: { goBack }, addNewPaymentFn }) => (
             onSubmit={(e) => e.preventDefault()}
           >
             <StyledHeader>add a new payment:</StyledHeader>
-
             <StyledInput
-              select={['---', ...dataShape.categories.map((category) => [category])]}
+              select={['---', ...dataShape.categories.map((category) => [category, category])]}
               name={dataShape.category}
               id={dataShape.category}
               onChange={handleChange}
@@ -187,6 +186,7 @@ const AddPaymentView = ({ history: { goBack }, addNewPaymentFn }) => (
             </StyledInput>
 
             <StyledInput
+              select={['---', ...dataShape.cycles.map((cycle) => [cycle.cycleAddName, cycle.cycleName])]}
               name={dataShape.cycle}
               id={dataShape.cycle}
               onChange={handleChange}
@@ -196,6 +196,20 @@ const AddPaymentView = ({ history: { goBack }, addNewPaymentFn }) => (
             >
               <ErrorMessage component={StyledError} name={dataShape.cycle} />
             </StyledInput>
+
+            {values[dataShape.cycle]
+                && (
+                  <StyledInput
+                    name={dataShape.repeatNumer}
+                    id={dataShape.repeatNumer}
+                    onChange={handleChange}
+                    value={values[dataShape.repeatNumer]}
+                    labelTxt="quantity"
+                    headerTxt="number of repetitions:"
+                  >
+                    <ErrorMessage component={StyledError} name={dataShape.repeatNumer} />
+                  </StyledInput>
+                )}
 
             <StyledInput
               textarea={1}
