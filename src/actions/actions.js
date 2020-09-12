@@ -1,0 +1,5 @@
+export const actions = {
+  ADD_PAYMENT: 'ADD_PAYMENT',
+  DELETE_PAYMENT: 'DELETE_PAYMENT',
+  DELETE_CYCLE: 'DELETE_CYCLE',
+};

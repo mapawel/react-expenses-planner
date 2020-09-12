@@ -44,18 +44,24 @@ const MonthView = ({ allPayments, context: { displiedDate } }) => (
           allPayments
             .filter((payment) => new Date(payment.deadline).getFullYear() === new Date(displiedDate).getFullYear())
             .filter((payment) => new Date(payment.deadline).getMonth() === new Date(displiedDate).getMonth())
-            .map((payment) => (
+            .map(({
+              id, category, title, ammount, description, deadline, cycle, createDate, infoWhenPay, cycleElementNr, repeatNumer, closed, paidAmmount,
+            }) => (
               <Card
-                key={payment.id}
-                id={payment.id}
-                category={payment.category}
-                title={payment.title}
-                ammount={payment.ammount}
-                description={payment.description}
-                deadline={payment.deadline}
-                cycle={payment.cycle}
-                paidAmmount={payment.paidAmmount}
-                closed={payment.closed}
+                id={id}
+                key={id}
+                category={category}
+                title={title}
+                ammount={ammount}
+                paidAmmount={paidAmmount}
+                description={description}
+                deadline={deadline}
+                cycle={cycle}
+                closed={closed}
+                createDate={createDate}
+                infoWhenPay={infoWhenPay}
+                cycleElementNr={cycleElementNr}
+                repeatNumer={repeatNumer}
               />
             ))
         }

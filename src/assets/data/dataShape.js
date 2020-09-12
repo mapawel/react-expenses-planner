@@ -1,14 +1,16 @@
 export const dataShape = {
   id: 'id',
-  cycleId: 'cycleId',
+  createDate: 'createDate',
   category: 'category',
   title: 'title',
   ammount: 'ammount',
   paidAmmount: 'paidAmmount',
   closed: 'closed',
   description: 'description',
+  infoWhenPay: 'infoWhenPay',
   deadline: 'deadline',
   cycle: 'cycle',
+  cycleElementNr: 'cycleElementNr',
   repeatNumer: 'repeatNumer',
   categories: [
     'holiday',

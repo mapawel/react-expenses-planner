@@ -36,7 +36,7 @@ const StyledBlend = styled.div`
     height: 100%;
     top: 0;
     left: 0;
-    background-color: ${({ theme }) => theme.color.blendBlack};
+    background-color: ${({ theme }) => (theme.paymentview ? 'none' : theme.color.blendBlack)};
 `;
 
 const StyledBoxWhenPayment = styled.div`
@@ -98,6 +98,7 @@ const StyledTextWrapper = styled.div`
 
 const StyledButtonsWrapper = styled.div`
   display: ${({ theme }) => (theme.paymentview ? 'none' : 'flex')};
+  z-index: 5;
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
@@ -126,7 +127,7 @@ const StyledPaidTxt = styled(StyledTitleParagraph)`
     z-index: 5;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: ${({ theme }) => (theme.paymentview ? 'flex-start' : 'center')};
     align-items: center;
     color: ${({ theme }) => theme.color.lightblue};
     ::before{
@@ -158,7 +159,7 @@ const StyledDateParagraph = styled(Paragraph)`
 `;
 
 const Card = ({
-  id, category, title, ammount, description, deadline, cycle, paidAmmount, closed,
+  id, category, title, ammount, description = '', deadline, cycle = '', paidAmmount, closed, createDate, infoWhenPay, cycleElementNr, repeatNumer,
 }) => (
   <StyledWrapper>
     <StyledTitleWrapper>
@@ -171,15 +172,14 @@ const Card = ({
             &nbsp;pln
         </StylenSpanPln>
       </StyledTitleParagraph>
-      {closed
-          && (
-            <StyledPaidTxt big>
-              {paidAmmount}
-              <StylenSpanPln closed={closed}>
-                &nbsp;pln
-              </StylenSpanPln>
-            </StyledPaidTxt>
-          )}
+      {closed && (
+      <StyledPaidTxt big>
+        {paidAmmount}
+        <StylenSpanPln closed={closed}>
+              &nbsp;pln
+        </StylenSpanPln>
+      </StyledPaidTxt>
+      )}
     </StyledTitleWrapper>
     <StyledInnerWrapper>
       {closed && <StyledBlend />}
@@ -196,14 +196,49 @@ const Card = ({
                 &nbsp;pln
             </StylenSpanPln>
           </StyledTitleParagraph>
+          {closed
+              && (
+                <StyledPaidTxt big>
+                  {paidAmmount}
+                  <StylenSpanPln>
+                    &nbsp;pln
+                  </StylenSpanPln>
+                </StyledPaidTxt>
+              )}
         </StyledBoxWhenPayment>
 
         <Paragraph small>description:</Paragraph>
-        <StyledParagraph>{description}</StyledParagraph>
+        <StyledParagraph>{description.length > 0 ? description : '-'}</StyledParagraph>
         <Paragraph small>deadline:</Paragraph>
         <StyledDateParagraph>{new Date(deadline).toLocaleDateString()}</StyledDateParagraph>
         <Paragraph small>cycle:</Paragraph>
-        <StyledParagraph>{cycle}</StyledParagraph>
+        <StyledParagraph>{cycle.length > 0 ? `every ${cycle.slice(0, -1)}` : 'once'}</StyledParagraph>
+        <StyledBoxWhenPayment>
+
+          {cycle
+              && (
+                <>
+                  <Paragraph small>number of repetitions:</Paragraph>
+                  <StyledParagraph>{repeatNumer}</StyledParagraph>
+                  <Paragraph small>element cycle number:</Paragraph>
+                  <StyledParagraph>{cycleElementNr}</StyledParagraph>
+                </>
+              )}
+
+          <Paragraph small>status:</Paragraph>
+          <StyledParagraph>{closed ? 'paid' : 'to pay'}</StyledParagraph>
+
+          {closed
+              && (
+                <>
+                  <Paragraph small>info adden when paid:</Paragraph>
+                  <StyledParagraph>{infoWhenPay}</StyledParagraph>
+                </>
+              )}
+          <Paragraph small>payment edit date:</Paragraph>
+          <StyledParagraph>{new Date(createDate).toLocaleDateString()}</StyledParagraph>
+
+        </StyledBoxWhenPayment>
       </StyledTextWrapper>
       <StyledButtonsWrapper>
         <Button round={1} icon={moneyIcon} />
@@ -218,18 +253,15 @@ Card.propTypes = {
   category: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   ammount: PropTypes.number.isRequired,
-  paidAmmount: PropTypes.number,
-  description: PropTypes.string,
+  paidAmmount: PropTypes.number.isRequired,
+  description: PropTypes.string.isRequired,
   deadline: PropTypes.number.isRequired,
-  cycle: PropTypes.string,
-  closed: PropTypes.bool,
-};
-
-Card.defaultProps = {
-  description: '-',
-  cycle: 'none',
-  closed: false,
-  paidAmmount: 0,
+  cycle: PropTypes.string.isRequired,
+  closed: PropTypes.bool.isRequired,
+  createDate: PropTypes.number.isRequired,
+  infoWhenPay: PropTypes.string.isRequired,
+  cycleElementNr: PropTypes.number.isRequired,
+  repeatNumer: PropTypes.number.isRequired,
 };
 
 export default Card;

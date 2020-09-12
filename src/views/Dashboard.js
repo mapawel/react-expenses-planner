@@ -40,17 +40,23 @@ class Dashboard extends React.Component {
                 .filter((payment) => new Date(payment.deadline).getMonth() === currentTime.getMonth())
                 .filter((payment) => payment.closed === false)
                 .map(({
-                  id, category, title, ammount, description, deadline, cycle,
+                  id, category, title, ammount, description, deadline, cycle, createDate, infoWhenPay, cycleElementNr, repeatNumer, closed, paidAmmount,
                 }) => (
                   <Card
-                    key={id}
                     id={id}
+                    key={id}
                     category={category}
                     title={title}
                     ammount={ammount}
+                    paidAmmount={paidAmmount}
                     description={description}
                     deadline={deadline}
                     cycle={cycle}
+                    closed={closed}
+                    createDate={createDate}
+                    infoWhenPay={infoWhenPay}
+                    cycleElementNr={cycleElementNr}
+                    repeatNumer={repeatNumer}
                   />
                 ))
             }
@@ -70,17 +76,23 @@ class Dashboard extends React.Component {
                 .filter((payment) => new Date(payment.deadline).getDate() === currentTime.getDate())
                 .filter((payment) => payment.closed === false)
                 .map(({
-                  id, category, title, ammount, description, deadline, cycle,
+                  id, category, title, ammount, description, deadline, cycle, createDate, infoWhenPay, cycleElementNr, repeatNumer, closed, paidAmmount,
                 }) => (
                   <Card
-                    key={id}
                     id={id}
+                    key={id}
                     category={category}
                     title={title}
                     ammount={ammount}
+                    paidAmmount={paidAmmount}
                     description={description}
                     deadline={deadline}
                     cycle={cycle}
+                    closed={closed}
+                    createDate={createDate}
+                    infoWhenPay={infoWhenPay}
+                    cycleElementNr={cycleElementNr}
+                    repeatNumer={repeatNumer}
                   />
                 ))
             }

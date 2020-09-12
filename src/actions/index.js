@@ -1,31 +1,65 @@
 import moment from 'moment';
+import { dataShape } from 'assets/data/dataShape';
+import { actions } from 'actions/actions';
 
-export const updateDeadlineDates = (updatedArray) => ({
-  type: 'UPDATE_DEADLINES',
-  payload: updatedArray,
-});
-
-export const addNewPayment = (newPaymentObject) => {
-  const repeatNumer = newPaymentObject.cycle === '' ? 1 : newPaymentObject.repeatNumer;
+export const setStartPayments = (paymentObject, index) => {
+  const repeatNumer = paymentObject.cycle === '' ? 1 : paymentObject.repeatNumer * 1;
+  const createDate = new Date().getTime() + index;
   const payload = [];
-  const cycleId = new Date().getTime();
-  for (let i = 0; i < repeatNumer; i += 1) {
+  for (let i = 1; i <= repeatNumer; i += 1) {
     payload.push({
-      id: i + new Date().getTime(),
-      cycleId,
-      category: newPaymentObject.category,
-      title: newPaymentObject.title,
-      ammount: newPaymentObject.ammount * 1,
-      paidAmmount: 0,
-      closed: false,
-      description: newPaymentObject.description,
-      deadline: new Date(moment(newPaymentObject.deadline).add(i, newPaymentObject.cycle)).getTime(),
-      cycle: newPaymentObject.cycle,
-      repeatNumer,
+      [dataShape.id]: i + new Date().getTime() + 500 * index,
+      [dataShape.createDate]: createDate,
+      [dataShape.category]: paymentObject.category,
+      [dataShape.title]: paymentObject.title,
+      [dataShape.ammount]: paymentObject.ammount * 1,
+      [dataShape.paidAmmount]: paymentObject.paidAmmount * 1,
+      [dataShape.closed]: paymentObject.closed,
+      [dataShape.description]: paymentObject.description,
+      [dataShape.infoWhenPay]: paymentObject.infoWhenPay,
+      [dataShape.deadline]: new Date(moment(paymentObject.deadline).add(i - 1, paymentObject.cycle)).getTime(),
+      [dataShape.cycle]: paymentObject.cycle,
+      [dataShape.cycleElementNr]: i,
+      [dataShape.repeatNumer]: repeatNumer,
     });
   }
   return {
-    type: 'ADD_PAYMENT',
+    type: actions.ADD_PAYMENT,
     payload,
+  };
+};
+
+export const addNewPayment = (newPaymentObject) => {
+  const repeatNumer = newPaymentObject.cycle === '' ? 1 : newPaymentObject.repeatNumer * 1;
+  const payload = [];
+  const createDate = new Date().getTime();
+  for (let i = 1; i <= repeatNumer; i += 1) {
+    payload.push({
+      [dataShape.id]: i + new Date().getTime(),
+      [dataShape.createDate]: createDate,
+      [dataShape.category]: newPaymentObject.category,
+      [dataShape.title]: newPaymentObject.title,
+      [dataShape.ammount]: newPaymentObject.ammount * 1,
+      [dataShape.paidAmmount]: 0,
+      [dataShape.closed]: false,
+      [dataShape.description]: newPaymentObject.description,
+      [dataShape.infoWhenPay]: '',
+      [dataShape.deadline]: new Date(moment(newPaymentObject.deadline).add(i - 1, newPaymentObject.cycle)).getTime(),
+      [dataShape.cycle]: newPaymentObject.cycle,
+      [dataShape.cycleElementNr]: i,
+      [dataShape.repeatNumer]: repeatNumer,
+    });
+  }
+  return {
+    type: actions.ADD_PAYMENT,
+    payload,
+  };
+};
+
+export const deletePayments = (id, isCycle) => {
+  const type = isCycle ? actions.DELETE_CYCLE : actions.DELETE_PAYMENT;
+  return {
+    type,
+    payload: id,
   };
 };

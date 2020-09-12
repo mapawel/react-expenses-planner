@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { paymentsToUpdate } from 'assets/data/paymentsToUpdate';
-import { updateDeadlineDates } from 'actions';
+import { setStartPayments } from 'actions';
 
 const Button = styled.button`
   position: fixed;
@@ -25,7 +25,7 @@ const DataUpdater = ({ updateFn }) => {
   const handleUpdate = () => {
     const getToday = () => new Date().getTime();
     const getFutureDeadline = () => (getToday() + Math.floor((Math.random() * 8000000000)));
-    const getPastDeadline = () => (getToday() - Math.floor((Math.random() * 1500000000)));
+    const getPastDeadline = () => (getToday() - Math.floor((Math.random() * 1000000000)));
     const updatedPayments = paymentsToUpdate.map((payment) => ({ ...payment }));
     updatedPayments.forEach((payment, index) => {
       if (index < 2) payment.deadline = getPastDeadline();
@@ -33,7 +33,7 @@ const DataUpdater = ({ updateFn }) => {
       else payment.deadline = getFutureDeadline();
     });
     updatedPayments.sort((a, b) => a.deadline - b.deadline);
-    updateFn(updatedPayments);
+    updatedPayments.forEach((payment, index) => updateFn(payment, index));
   };
 
   return (
@@ -45,7 +45,7 @@ const DataUpdater = ({ updateFn }) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  updateFn: (updatedArray) => dispatch(updateDeadlineDates(updatedArray)),
+  updateFn: (paymentObject, index) => dispatch(setStartPayments(paymentObject, index)),
 });
 
 DataUpdater.propTypes = {

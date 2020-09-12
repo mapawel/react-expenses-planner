@@ -11,7 +11,6 @@ import { addNewPayment } from 'actions';
 import { connect } from 'react-redux';
 import { Formik, ErrorMessage } from 'formik';
 import { validatorSchema } from 'validatorSchema/validatorSchema';
-// import moment from 'moment';
 
 const StyledWrapper = styled.div`
     width: 100%;
@@ -92,8 +91,6 @@ const StyledError = styled.p`
 
 const AddPaymentView = ({ history: { goBack }, addNewPaymentFn }) => (
   <SectionTemplate backtype="secondary">
-    {/* {console.log(moment(new Date()).add(2, 'weeks').format('DD/MM/YYYY'))} */}
-
     <StyledWrapper>
       <StyledHead>
         <Logo />
