@@ -62,7 +62,7 @@ const StyledInputHeader = styled(Paragraph)`
     margin-bottom: 10px;
     font-size: ${({ theme }) => theme.fontSize.m};
     letter-spacing: .05rem;
-    color: ${({ theme }) => theme.color.white};
+    color: ${({ theme }) => theme.backtype ? theme.color.white : theme.color.darkblue};
     text-transform: uppercase;
 `;
 

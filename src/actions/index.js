@@ -63,3 +63,23 @@ export const deletePayments = (id, isCycle) => {
     payload: id,
   };
 };
+
+export const payPayment = (id, { paidAmmount, infoWhenPay }) => ({
+  type: actions.PAY_PAYMENT,
+  payload: {
+    id,
+    [dataShape.paidAmmount]: paidAmmount * 1,
+    infoWhenPay,
+    [dataShape.createDate]: new Date().getTime(),
+  },
+});
+
+export const editPayment = (updatedPaymentObject) => ({
+  type: actions.EDIT_PAYMENT,
+  payload: {
+    ...updatedPaymentObject,
+    [dataShape.ammount]: updatedPaymentObject[dataShape.ammount] * 1,
+    [dataShape.deadline]: new Date(updatedPaymentObject[dataShape.deadline]).getTime(),
+    [dataShape.repeatNumer]: updatedPaymentObject[dataShape.repeatNumer] * 1,
+  },
+});

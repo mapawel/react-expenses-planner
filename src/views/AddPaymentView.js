@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -7,10 +8,10 @@ import Button from 'components/atoms/Button/Button';
 import Header from 'components/atoms/Header/Header';
 import Input from 'components/atoms/Input/Input';
 import { dataShape } from 'assets/data/dataShape';
-import { addNewPayment } from 'actions';
+import { addNewPayment, editPayment } from 'actions';
 import { connect } from 'react-redux';
 import { Formik, ErrorMessage } from 'formik';
-import { validatorSchema } from 'validatorSchema/validatorSchema';
+import { validatorSchemaAdd } from 'validatorSchema/validatorSchema';
 
 const StyledWrapper = styled.div`
     width: 100%;
@@ -89,7 +90,9 @@ const StyledError = styled.p`
   text-decoration: underline;
 `;
 
-const AddPaymentView = ({ history: { goBack }, addNewPaymentFn }) => (
+const AddPaymentView = ({
+  location: { state: { filteredPayment } = {} }, history: { goBack }, addNewPaymentFn, editPaymentFn,
+}) => (
   <SectionTemplate backtype="secondary">
     <StyledWrapper>
       <StyledHead>
@@ -103,20 +106,28 @@ const AddPaymentView = ({ history: { goBack }, addNewPaymentFn }) => (
       </StyledHead>
 
       <Formik
-        initialValues={{
-          [dataShape.category]: '', [dataShape.title]: '', [dataShape.ammount]: '', [dataShape.deadline]: '', [dataShape.cycle]: '', [dataShape.description]: '', [dataShape.repeatNumer]: '',
-        }}
-        validationSchema={validatorSchema}
-        onSubmit={
-          (values, { setSubmitting }) => {
-            addNewPaymentFn(values);
-
-            setTimeout(() => {
-              setSubmitting(false);
-              goBack();
-            }, 200);
+        initialValues={
+            filteredPayment
+              ? {
+                [dataShape.category]: filteredPayment.category, [dataShape.title]: filteredPayment.title, [dataShape.ammount]: filteredPayment.ammount, [dataShape.deadline]: new Date(filteredPayment.deadline), [dataShape.cycle]: filteredPayment.cycle, [dataShape.description]: filteredPayment.description, [dataShape.repeatNumer]: filteredPayment.repeatNumer,
+              }
+              : {
+                [dataShape.category]: '', [dataShape.title]: '', [dataShape.ammount]: '', [dataShape.deadline]: '', [dataShape.cycle]: '', [dataShape.description]: '', [dataShape.repeatNumer]: '',
+              }
           }
-        }
+        validationSchema={validatorSchemaAdd}
+        onSubmit={
+            (values, { setSubmitting }) => {
+              const editedData = filteredPayment ? Object.assign(filteredPayment, values) : null;
+              if (filteredPayment) editPaymentFn(editedData);
+              else addNewPaymentFn(values);
+
+              setTimeout(() => {
+                setSubmitting(false);
+                goBack();
+              }, 200);
+            }
+          }
       >
         {({
           values,
@@ -182,31 +193,36 @@ const AddPaymentView = ({ history: { goBack }, addNewPaymentFn }) => (
               <ErrorMessage component={StyledError} name={dataShape.deadline} />
             </StyledInput>
 
-            <StyledInput
-              select={['---', ...dataShape.cycles.map((cycle) => [cycle.cycleAddName, cycle.cycleName])]}
-              name={dataShape.cycle}
-              id={dataShape.cycle}
-              onChange={handleChange}
-              value={values[dataShape.cycle]}
-              labelTxt="recurrence"
-              headerTxt="choose cycle:"
-            >
-              <ErrorMessage component={StyledError} name={dataShape.cycle} />
-            </StyledInput>
+            {!filteredPayment
+              ? (
+                <StyledInput
+                  select={['---', ...dataShape.cycles.map((cycle) => [cycle.cycleAddName, cycle.cycleName])]}
+                  name={dataShape.cycle}
+                  id={dataShape.cycle}
+                  onChange={handleChange}
+                  value={values[dataShape.cycle]}
+                  labelTxt="recurrence"
+                  headerTxt="choose cycle:"
+                >
+                  <ErrorMessage component={StyledError} name={dataShape.cycle} />
+                </StyledInput>
+              )
+              : null}
 
-            {values[dataShape.cycle]
-                && (
-                  <StyledInput
-                    name={dataShape.repeatNumer}
-                    id={dataShape.repeatNumer}
-                    onChange={handleChange}
-                    value={values[dataShape.repeatNumer]}
-                    labelTxt="quantity"
-                    headerTxt="number of repetitions:"
-                  >
-                    <ErrorMessage component={StyledError} name={dataShape.repeatNumer} />
-                  </StyledInput>
-                )}
+            {!filteredPayment
+                  && values[dataShape.cycle]
+                  && (
+                    <StyledInput
+                      name={dataShape.repeatNumer}
+                      id={dataShape.repeatNumer}
+                      onChange={handleChange}
+                      value={values[dataShape.repeatNumer]}
+                      labelTxt="quantity"
+                      headerTxt="number of repetitions:"
+                    >
+                      <ErrorMessage component={StyledError} name={dataShape.repeatNumer} />
+                    </StyledInput>
+                  )}
 
             <StyledInput
               textarea={1}
@@ -231,7 +247,7 @@ const AddPaymentView = ({ history: { goBack }, addNewPaymentFn }) => (
                 disabled={isSubmitting}
                 type="button"
               >
-                add
+                {filteredPayment ? 'change' : 'add'}
               </Button>
               <Button
                 onClick={goBack}
@@ -250,11 +266,22 @@ AddPaymentView.propTypes = {
   history: PropTypes.shape({
     goBack: PropTypes.func.isRequired,
   }).isRequired,
+  location: PropTypes.shape({
+    state: PropTypes.object,
+  }),
   addNewPaymentFn: PropTypes.func.isRequired,
+  editPaymentFn: PropTypes.func.isRequired,
+};
+
+AddPaymentView.defaultProps = {
+  location: {},
 };
 
 const mapDispatchToProps = (dispatch) => (
-  { addNewPaymentFn: (newPayment) => dispatch(addNewPayment(newPayment)) }
+  {
+    addNewPaymentFn: (newPayment) => dispatch(addNewPayment(newPayment)),
+    editPaymentFn: (editedData) => dispatch(editPayment(editedData)),
+  }
 );
 
 export default connect(null, mapDispatchToProps)(AddPaymentView);

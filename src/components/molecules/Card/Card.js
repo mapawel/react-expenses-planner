@@ -228,20 +228,20 @@ const Card = ({
           <Paragraph small>status:</Paragraph>
           <StyledParagraph>{closed ? 'paid' : 'to pay'}</StyledParagraph>
 
-          {closed
+          {closed && infoWhenPay
               && (
                 <>
                   <Paragraph small>info adden when paid:</Paragraph>
                   <StyledParagraph>{infoWhenPay}</StyledParagraph>
                 </>
               )}
-          <Paragraph small>payment edit date:</Paragraph>
+          <Paragraph small>{closed ? 'paid on' : 'creation date:'}</Paragraph>
           <StyledParagraph>{new Date(createDate).toLocaleDateString()}</StyledParagraph>
 
         </StyledBoxWhenPayment>
       </StyledTextWrapper>
       <StyledButtonsWrapper>
-        <Button round={1} icon={moneyIcon} />
+        {closed ? null : <Link to={`/proceed/${id}`}><Button round={1} icon={moneyIcon} /></Link>}
         <Link to={`/payment/${id}`}><Button round={1} icon={infoIcon} /></Link>
       </StyledButtonsWrapper>
     </StyledInnerWrapper>

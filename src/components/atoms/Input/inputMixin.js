@@ -10,7 +10,7 @@ export const inputMixin = () => (
     border: none;
     border-radius: 26px;
     color: ${mainTheme.color.darkblue};
-    box-shadow: inset 5px 5px 6px ${mainTheme.color.darkgrey};
+    box-shadow: inset 4px 4px 8px ${mainTheme.color.darkgrey};
     line-height: 1;
     overflow: hidden;
     -webkit-appearance: none;

@@ -10,7 +10,7 @@ import waveUpLightImage from 'assets/icons/waveuplight.svg';
 import NavWave from 'components/atoms/NavWave/NavWave';
 import Button from 'components/atoms/Button/Button';
 import withContext from 'hoc/withContext';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -24,26 +24,28 @@ const StyledLeftBox = styled.div`
   padding-right: 15px;
 `;
 
-const DaysView = ({ allPayments, match: { params: { dayId } } }) => (
-  <>
-    <SectionTemplate nav={1}>
-      <Navigation />
-    </SectionTemplate>
-    <NavWave image={waveUpLightImage} />
-    <SectionTemplate
-      sectionname="days's details:"
-      backtype="secondary"
-    >
-      <StyledLeftBox>
-        <StyledLink to="/calendar"><Button>go back</Button></StyledLink>
-      </StyledLeftBox>
-      <CardsTemplate>
-        {
-          allPayments
-            .filter((payment) => new Date(payment.deadline).getFullYear() === new Date(dayId * 1).getFullYear())
-            .filter((payment) => new Date(payment.deadline).getMonth() === new Date(dayId * 1).getMonth())
-            .filter((payment) => new Date(payment.deadline).getDate() === new Date(dayId * 1).getDate())
-            .map(({
+const DaysView = ({ allPayments, match: { params: { dayId } } }) => {
+  const daysPayments = allPayments
+    .filter((payment) => new Date(payment.deadline).getFullYear() === new Date(dayId * 1).getFullYear())
+    .filter((payment) => new Date(payment.deadline).getMonth() === new Date(dayId * 1).getMonth())
+    .filter((payment) => new Date(payment.deadline).getDate() === new Date(dayId * 1).getDate())
+    .sort((a, b) => a.deadline - b.deadline);
+  return (
+    <>
+      <SectionTemplate nav={1}>
+        <Navigation />
+      </SectionTemplate>
+      <NavWave image={waveUpLightImage} />
+      <SectionTemplate
+        sectionname="days's details:"
+        backtype="secondary"
+      >
+        <StyledLeftBox>
+          <StyledLink to="/calendar"><Button>go back</Button></StyledLink>
+        </StyledLeftBox>
+        <CardsTemplate>
+          {daysPayments.length > 0 ? (
+            daysPayments.map(({
               id, category, title, ammount, description, deadline, cycle, createDate, infoWhenPay, cycleElementNr, repeatNumer, closed, paidAmmount,
             }) => (
               <Card
@@ -63,11 +65,14 @@ const DaysView = ({ allPayments, match: { params: { dayId } } }) => (
                 repeatNumer={repeatNumer}
               />
             ))
-        }
-      </CardsTemplate>
-    </SectionTemplate>
-  </>
-);
+          ) : (
+            <Redirect to="/calendar" />
+          )}
+        </CardsTemplate>
+      </SectionTemplate>
+    </>
+  );
+};
 
 DaysView.propTypes = {
   allPayments: PropTypes.arrayOf(PropTypes.object).isRequired,

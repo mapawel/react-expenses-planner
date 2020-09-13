@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import CardsTemplate from 'templates/CardsTemplate';
 import Card from 'components/molecules/Card/Card';
+import Header from 'components/atoms/Header/Header';
 import Navigation from 'components/organisms/Navigation/Navigation';
 import SectionTemplate from 'templates/SectionTemplate';
 import waveUpImage from 'assets/icons/waveup.svg';
@@ -22,6 +23,17 @@ class Dashboard extends React.Component {
 
   render() {
     const { allPayments, context: { currentTime } } = this.props;
+    const monthsPayments = allPayments
+      .filter((payment) => new Date(payment.deadline).getFullYear() === currentTime.getFullYear())
+      .filter((payment) => new Date(payment.deadline).getMonth() === currentTime.getMonth())
+      .filter((payment) => payment.closed === false)
+      .sort((a, b) => a.deadline - b.deadline);
+    const daysPayments = allPayments
+      .filter((payment) => new Date(payment.deadline).getFullYear() === currentTime.getFullYear())
+      .filter((payment) => new Date(payment.deadline).getMonth() === currentTime.getMonth())
+      .filter((payment) => new Date(payment.deadline).getDate() === currentTime.getDate())
+      .filter((payment) => payment.closed === false)
+      .sort((a, b) => a.deadline - b.deadline);
     return (
       <>
         <SectionTemplate backtype="secondary">
@@ -34,32 +46,32 @@ class Dashboard extends React.Component {
         >
           <MonthsTitle />
           <CardsTemplate>
-            {
-              allPayments
-                .filter((payment) => new Date(payment.deadline).getFullYear() === currentTime.getFullYear())
-                .filter((payment) => new Date(payment.deadline).getMonth() === currentTime.getMonth())
-                .filter((payment) => payment.closed === false)
-                .map(({
-                  id, category, title, ammount, description, deadline, cycle, createDate, infoWhenPay, cycleElementNr, repeatNumer, closed, paidAmmount,
-                }) => (
-                  <Card
-                    id={id}
-                    key={id}
-                    category={category}
-                    title={title}
-                    ammount={ammount}
-                    paidAmmount={paidAmmount}
-                    description={description}
-                    deadline={deadline}
-                    cycle={cycle}
-                    closed={closed}
-                    createDate={createDate}
-                    infoWhenPay={infoWhenPay}
-                    cycleElementNr={cycleElementNr}
-                    repeatNumer={repeatNumer}
-                  />
-                ))
-            }
+            {monthsPayments.length > 0
+              ? (monthsPayments.map(({
+                id, category, title, ammount, description, deadline, cycle, createDate, infoWhenPay, cycleElementNr, repeatNumer, closed, paidAmmount,
+              }) => (
+                <Card
+                  id={id}
+                  key={id}
+                  category={category}
+                  title={title}
+                  ammount={ammount}
+                  paidAmmount={paidAmmount}
+                  description={description}
+                  deadline={deadline}
+                  cycle={cycle}
+                  closed={closed}
+                  createDate={createDate}
+                  infoWhenPay={infoWhenPay}
+                  cycleElementNr={cycleElementNr}
+                  repeatNumer={repeatNumer}
+                />
+              ))
+              ) : (
+                <Header big style={{ marginLeft: '100px', marginTop: '10vh' }}>
+                  Nothing to pay this month :)
+                </Header>
+              )}
           </CardsTemplate>
         </SectionTemplate>
         <Wave image={waveImage} />
@@ -69,33 +81,32 @@ class Dashboard extends React.Component {
         >
           <BackImage img={coinsImage} />
           <CardsTemplate>
-            {
-              allPayments
-                .filter((payment) => new Date(payment.deadline).getFullYear() === currentTime.getFullYear())
-                .filter((payment) => new Date(payment.deadline).getMonth() === currentTime.getMonth())
-                .filter((payment) => new Date(payment.deadline).getDate() === currentTime.getDate())
-                .filter((payment) => payment.closed === false)
-                .map(({
-                  id, category, title, ammount, description, deadline, cycle, createDate, infoWhenPay, cycleElementNr, repeatNumer, closed, paidAmmount,
-                }) => (
-                  <Card
-                    id={id}
-                    key={id}
-                    category={category}
-                    title={title}
-                    ammount={ammount}
-                    paidAmmount={paidAmmount}
-                    description={description}
-                    deadline={deadline}
-                    cycle={cycle}
-                    closed={closed}
-                    createDate={createDate}
-                    infoWhenPay={infoWhenPay}
-                    cycleElementNr={cycleElementNr}
-                    repeatNumer={repeatNumer}
-                  />
-                ))
-            }
+            {monthsPayments.length > 0
+              ? (daysPayments.map(({
+                id, category, title, ammount, description, deadline, cycle, createDate, infoWhenPay, cycleElementNr, repeatNumer, closed, paidAmmount,
+              }) => (
+                <Card
+                  id={id}
+                  key={id}
+                  category={category}
+                  title={title}
+                  ammount={ammount}
+                  paidAmmount={paidAmmount}
+                  description={description}
+                  deadline={deadline}
+                  cycle={cycle}
+                  closed={closed}
+                  createDate={createDate}
+                  infoWhenPay={infoWhenPay}
+                  cycleElementNr={cycleElementNr}
+                  repeatNumer={repeatNumer}
+                />
+              ))
+              ) : (
+                <Header big style={{ marginLeft: '100px', marginTop: '10vh' }}>
+                  Nothing to pay today :)
+                </Header>
+              )}
           </CardsTemplate>
         </SectionTemplate>
       </>

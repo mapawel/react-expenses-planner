@@ -6,5 +6,6 @@ export const routes = {
   day: '/day/:dayId',
   payment: '/payment/:paymentId',
   addnew: '/addnew',
+  proceed: '/proceed/:paymentId',
   test3: '/test3',
 };

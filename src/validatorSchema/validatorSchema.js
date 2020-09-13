@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 import { dataShape } from 'assets/data/dataShape';
 
-export const validatorSchema = Yup.object().shape({
+export const validatorSchemaAdd = Yup.object().shape({
   [dataShape.category]: Yup.string()
     .required('this field is required'),
   [dataShape.title]: Yup.string()
@@ -25,4 +25,13 @@ export const validatorSchema = Yup.object().shape({
         .integer('use "full" integers (not floats)')
         .required('this field is required'),
     }),
+});
+
+export const validatorSchemaProceed = Yup.object().shape({
+  [dataShape.paidAmmount]: Yup.number()
+    .typeError('fill in with a number (ammount) and use DOT not comma')
+    .positive('do not use negative values')
+    .required('this field is required'),
+  [dataShape.infoWhenPay]: Yup.string()
+    .max(30, 'too long'),
 });

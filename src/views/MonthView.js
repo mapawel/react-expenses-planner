@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Header from 'components/atoms/Header/Header';
 import CardsTemplate from 'templates/CardsTemplate';
 import Card from 'components/molecules/Card/Card';
 import Navigation from 'components/organisms/Navigation/Navigation';
@@ -25,26 +26,28 @@ const StyledLeftBox = styled.div`
   padding-right: 15px;
 `;
 
-const MonthView = ({ allPayments, context: { displiedDate } }) => (
-  <>
-    <SectionTemplate nav={1}>
-      <Navigation />
-    </SectionTemplate>
-    <NavWave image={waveUpLightImage} />
-    <SectionTemplate
-      sectionname="month's details:"
-      backtype="secondary"
-    >
-      <StyledLeftBox>
-        <MonthsTitle short={1} />
-        <StyledLink to="/calendar"><Button>go back</Button></StyledLink>
-      </StyledLeftBox>
-      <CardsTemplate>
-        {
-          allPayments
-            .filter((payment) => new Date(payment.deadline).getFullYear() === new Date(displiedDate).getFullYear())
-            .filter((payment) => new Date(payment.deadline).getMonth() === new Date(displiedDate).getMonth())
-            .map(({
+const MonthView = ({ allPayments, context: { displiedDate } }) => {
+  const monthsPayments = allPayments
+    .filter((payment) => new Date(payment.deadline).getFullYear() === new Date(displiedDate).getFullYear())
+    .filter((payment) => new Date(payment.deadline).getMonth() === new Date(displiedDate).getMonth())
+    .sort((a, b) => a.deadline - b.deadline);
+  return (
+    <>
+      <SectionTemplate nav={1}>
+        <Navigation />
+      </SectionTemplate>
+      <NavWave image={waveUpLightImage} />
+      <SectionTemplate
+        sectionname="month's details:"
+        backtype="secondary"
+      >
+        <StyledLeftBox>
+          <MonthsTitle short={1} />
+          <StyledLink to="/calendar"><Button>go back</Button></StyledLink>
+        </StyledLeftBox>
+        <CardsTemplate>
+          {monthsPayments.length > 0 ? (
+            monthsPayments.map(({
               id, category, title, ammount, description, deadline, cycle, createDate, infoWhenPay, cycleElementNr, repeatNumer, closed, paidAmmount,
             }) => (
               <Card
@@ -64,11 +67,16 @@ const MonthView = ({ allPayments, context: { displiedDate } }) => (
                 repeatNumer={repeatNumer}
               />
             ))
-        }
-      </CardsTemplate>
-    </SectionTemplate>
-  </>
-);
+          ) : (
+            <Header big style={{ marginLeft: '100px', marginTop: '10vh' }}>
+              Nothing to pay this month :)
+            </Header>
+          )}
+        </CardsTemplate>
+      </SectionTemplate>
+    </>
+  );
+};
 
 MonthView.propTypes = {
   allPayments: PropTypes.arrayOf(PropTypes.object).isRequired,
