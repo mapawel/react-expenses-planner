@@ -17,28 +17,32 @@ import AddPaymentView from 'views/AddPaymentView';
 import ProceedPayment from 'views/ProceedPayment';
 import DataUpdater from 'assets/data/DataUpdater';
 import AppContext from 'context';
+import { loadState } from 'localStorage';
 
 class Root extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+    state = {
       currentTime: new Date(),
       monthShift: 0,
       displiedDate: new Date(),
+      isDataUpdaterShown: true,
     };
-  }
 
-  componentDidMount() {
-    const { currentTime } = this.state;
-    this.timer = setInterval(this.updateTime, 60000);
-    this.setState({
-      displiedDate: new Date(currentTime.getFullYear(), currentTime.getMonth()),
-    });
-  }
+    componentDidMount() {
+      const { currentTime } = this.state;
+      this.timer = setInterval(this.updateTime, 60000);
+      this.setState({
+        displiedDate: new Date(currentTime.getFullYear(), currentTime.getMonth()),
+      });
+      if (loadState()) {
+        this.setState({
+          isDataUpdaterShown: false,
+        });
+      }
+    }
 
-  componentWillUnmount() {
-    clearInterval(this.timer);
-  }
+    componentWillUnmount() {
+      clearInterval(this.timer);
+    }
 
   updateTime = () => {
     this.setState({
@@ -64,18 +68,27 @@ class Root extends React.Component {
     }
   }
 
+  handleDataUpdaterShow = () => {
+    this.setState({
+      isDataUpdaterShown: false,
+    });
+  }
+
   render() {
     const contextElements = {
       ...this.state,
       handleMonthShift: this.handleMonthShift,
+      handleDataUpdaterShow: this.handleDataUpdaterShow,
     };
+
+    const { isDataUpdaterShown } = this.state;
 
     return (
       <Provider store={store}>
-        <DataUpdater />
         <BrowserRouter>
           <AppContext.Provider value={contextElements}>
             <RootTemplate>
+              {isDataUpdaterShown && <DataUpdater />}
               <Switch>
                 <Route exact path={routes.home} render={() => <Redirect to={routes.dashboard} />} />
                 <Route path={routes.dashboard} component={Dashboard} />
