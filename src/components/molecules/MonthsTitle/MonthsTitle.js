@@ -23,7 +23,7 @@ const StyledWrapper = styled.div`
     background-image: url(${moneyImage2});
     background-repeat: no-repeat;
     background-size: 80%;
-    background-position: 30% 98%;
+    background-position: 50% 98%;
     &::after{
       content: '';
       position: absolute;
@@ -38,6 +38,7 @@ const StyledWrapper = styled.div`
 `;
 
 const HeadWrapper = styled.div`
+    min-width: 240px;
     z-index: 1;
     display: flex;
     justify-content: space-between;
@@ -51,6 +52,8 @@ const StyledSpan = styled.span`
 `;
 
 const StyledArrowButton = styled(Button)`
+    display: flex;
+    height: 60px;
     min-width: 0;
     padding: 0 10px;
     background: none;

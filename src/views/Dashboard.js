@@ -81,7 +81,7 @@ class Dashboard extends React.Component {
         >
           <BackImage img={coinsImage} />
           <CardsTemplate>
-            {monthsPayments.length > 0
+            {daysPayments.length > 0
               ? (daysPayments.map(({
                 id, category, title, ammount, description, deadline, cycle, createDate, infoWhenPay, cycleElementNr, repeatNumer, closed, paidAmmount,
               }) => (
@@ -120,7 +120,7 @@ const mapStateToProps = (state) => ({
 
 Dashboard.propTypes = {
   allPayments: PropTypes.arrayOf(PropTypes.object).isRequired,
-  context: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.number, PropTypes.func])).isRequired,
+  context: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.number, PropTypes.func, PropTypes.bool])).isRequired,
 };
 
 export default connect(mapStateToProps)(withContext(Dashboard));

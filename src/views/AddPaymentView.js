@@ -12,6 +12,9 @@ import { addNewPayment, editPayment } from 'actions';
 import { connect } from 'react-redux';
 import { Formik, ErrorMessage } from 'formik';
 import { validatorSchemaAdd } from 'validatorSchema/validatorSchema';
+import backIcon from 'assets/icons/back.svg';
+import checkIcon from 'assets/icons/check.svg';
+import undoIcon from 'assets/icons/undo.svg';
 
 const StyledWrapper = styled.div`
     width: 100%;
@@ -239,6 +242,7 @@ const AddPaymentView = ({
             <StyledButtonsBox>
               <Button
                 onClick={resetForm}
+                icon={undoIcon}
               >
                 clear form
               </Button>
@@ -246,11 +250,13 @@ const AddPaymentView = ({
                 onClick={handleSubmit}
                 disabled={isSubmitting}
                 type="button"
+                icon={checkIcon}
               >
                 {filteredPayment ? 'change' : 'add'}
               </Button>
               <Button
                 onClick={goBack}
+                icon={backIcon}
               >
                 go back
               </Button>

@@ -6,11 +6,11 @@ import styled, { css } from 'styled-components';
 
 const BaseButton = styled.button`
     position: relative;
-    min-width: ${({ icon }) => (icon ? '190px' : '160px')};
+    min-width: 160px;
     height: 44px;
     display: flex;
+    column-gap: 10px;
     align-items: center;
-    justify-content: center;
     padding: 10px 15px;
     background-color: ${({ theme }) => theme.color.lightblue};
     color: ${({ theme }) => theme.color.darkblue};
@@ -20,8 +20,25 @@ const BaseButton = styled.button`
     border-radius: 10px;
     box-shadow: 3px 3px 15px -2px ${({ theme }) => (theme.backtype === 'secondary' ? theme.color.darkshadow : theme.color.lighthadow)};
     cursor: pointer;
+    transition: transform .2s;
+
+    &:hover{
+      transform: translate(-2px, -2px);
+    }
+
+    ${({ icon, round }) => ((icon && !round) ? css`
+    display: grid;
+    grid-template-rows: 24px;
+    grid-template-columns: 25px auto;
+    margin: 0;
+    ` : null)}
+
+    ${({ icon, round }) => ((!icon && !round) ? css`
+    justify-content: center;
+    ` : null)}
 
     ${({ round }) => round && css`
+    justify-content: center;
     min-width: 50px;
     width: 50px;
     height: 50px;
@@ -31,12 +48,14 @@ const BaseButton = styled.button`
 `;
 
 const StyledSvg = styled(ReactSVG)`
-    display: inline-block;
-    width: 50%;
+    width: ${({ round }) => (round ? '50%' : '70%')};
     display: ${({ resetmargin }) => (resetmargin ? 'flex' : 'block')};
     justify-content: center;
     margin-right: ${({ resetmargin }) => (resetmargin ? '0' : '10px')};
+
+    ${({ resetmargin }) => resetmargin && css`
     color: ${({ theme }) => (theme.backtype === 'secondary' ? theme.color.white : theme.color.darkgrey)};
+    `}
 
     ${({ round }) => round && css`
     color: ${({ theme }) => theme.color.darkblue};

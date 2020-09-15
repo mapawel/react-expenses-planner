@@ -12,6 +12,11 @@ import Button from 'components/atoms/Button/Button';
 import Card from 'components/molecules/Card/Card';
 import ConfirmModal from 'components/molecules/ConfirmModal/ConfirmModal';
 import { deletePayments } from 'actions';
+import moneyIcon from 'assets/icons/money.svg';
+import slidersIcon from 'assets/icons/sliders.svg';
+import trashIcon from 'assets/icons/trash.svg';
+import trashallIcon from 'assets/icons/trashall.svg';
+import backIcon from 'assets/icons/back.svg';
 
 const StyledCardWrapper = styled.div`
     width: 100%;
@@ -131,25 +136,28 @@ class PaymentView extends React.Component {
                 <StyledButtonsWrapper>
                   {filteredPayment.closed ? null : (
                     <>
-                      <StyledLink to={`/proceed/${filteredPayment.id}`}><Button>mark as paied</Button></StyledLink>
-                      <StyledLink to={{ pathname: '/addnew', state: { filteredPayment } }}><Button>edit this payment</Button></StyledLink>
+                      <StyledLink to={`/proceed/${filteredPayment.id}`}><Button icon={moneyIcon}>mark as paied</Button></StyledLink>
+                      <StyledLink to={{ pathname: '/addnew', state: { filteredPayment } }}><Button icon={slidersIcon}>edit this payment</Button></StyledLink>
                     </>
                   )}
 
                   <Button
                     onClick={() => this.handleOpenModal(false)}
+                    icon={trashIcon}
                   >
                     delete this payment
                   </Button>
                   {filteredPayment.cycle && !filteredPayment.closed ? (
                     <Button
                       onClick={() => this.handleOpenModal(true)}
+                      icon={trashallIcon}
                     >
                       delete whole cycle
                     </Button>
                   ) : null}
                   <Button
                     onClick={goBack}
+                    icon={backIcon}
                   >
                     go back
                   </Button>

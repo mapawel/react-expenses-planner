@@ -45,7 +45,7 @@ const CalendarView = ({ context: { displiedDate } }) => {
 };
 
 CalendarView.propTypes = {
-  context: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.number, PropTypes.func])).isRequired,
+  context: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.number, PropTypes.func, PropTypes.bool])).isRequired,
 };
 
 export default withContext(CalendarView);

@@ -125,6 +125,9 @@ const mapDispatchToProps = (dispatch) => ({
 
 DataUpdater.propTypes = {
   updateFn: PropTypes.func.isRequired,
+  context: PropTypes.shape({
+    handleDataUpdaterShow: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(withContext(DataUpdater));

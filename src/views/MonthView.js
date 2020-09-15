@@ -13,6 +13,7 @@ import MonthsTitle from 'components/molecules/MonthsTitle/MonthsTitle';
 import Button from 'components/atoms/Button/Button';
 import withContext from 'hoc/withContext';
 import { Link } from 'react-router-dom';
+import backIcon from 'assets/icons/back.svg';
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -43,7 +44,7 @@ const MonthView = ({ allPayments, context: { displiedDate } }) => {
       >
         <StyledLeftBox>
           <MonthsTitle short={1} />
-          <StyledLink to="/calendar"><Button>go back</Button></StyledLink>
+          <StyledLink to="/calendar"><Button icon={backIcon}>go back</Button></StyledLink>
         </StyledLeftBox>
         <CardsTemplate>
           {monthsPayments.length > 0 ? (
@@ -80,7 +81,7 @@ const MonthView = ({ allPayments, context: { displiedDate } }) => {
 
 MonthView.propTypes = {
   allPayments: PropTypes.arrayOf(PropTypes.object).isRequired,
-  context: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.number, PropTypes.func])).isRequired,
+  context: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.number, PropTypes.func, PropTypes.bool])).isRequired,
 };
 
 const mapStateToProps = (state) => ({

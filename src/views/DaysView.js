@@ -11,6 +11,7 @@ import NavWave from 'components/atoms/NavWave/NavWave';
 import Button from 'components/atoms/Button/Button';
 import withContext from 'hoc/withContext';
 import { Link, Redirect } from 'react-router-dom';
+import backIcon from 'assets/icons/back.svg';
 
 const StyledLink = styled(Link)`
   text-decoration: none;
@@ -41,7 +42,7 @@ const DaysView = ({ allPayments, match: { params: { dayId } } }) => {
         backtype="secondary"
       >
         <StyledLeftBox>
-          <StyledLink to="/calendar"><Button>go back</Button></StyledLink>
+          <StyledLink to="/calendar"><Button icon={backIcon}>go back</Button></StyledLink>
         </StyledLeftBox>
         <CardsTemplate>
           {daysPayments.length > 0 ? (

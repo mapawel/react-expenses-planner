@@ -15,6 +15,9 @@ import { dataShape } from 'assets/data/dataShape';
 import { Formik, ErrorMessage } from 'formik';
 import { validatorSchemaProceed } from 'validatorSchema/validatorSchema';
 import { payPayment } from 'actions';
+import backIcon from 'assets/icons/back.svg';
+import checkIcon from 'assets/icons/check.svg';
+import undoIcon from 'assets/icons/undo.svg';
 
 const StyledCardWrapper = styled.div`
     width: 100%;
@@ -160,6 +163,7 @@ const PaymentView = ({
               <StyledButtonsBox>
                 <Button
                   onClick={resetForm}
+                  icon={undoIcon}
                 >
                   clear form
                 </Button>
@@ -167,11 +171,13 @@ const PaymentView = ({
                   onClick={handleSubmit}
                   disabled={isSubmitting}
                   type="button"
+                  icon={checkIcon}
                 >
                   paid
                 </Button>
                 <Button
                   onClick={goBack}
+                  icon={backIcon}
                 >
                   go back
                 </Button>
