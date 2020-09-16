@@ -69,6 +69,7 @@ line-height: 1.6;
 `;
 
 const DataUpdater = ({ context: { handleDataUpdaterShow }, updateFn }) => {
+  document.body.style.overflowY = 'hidden';
   const handleUpdate = () => {
     const getToday = () => new Date().getTime();
     const getFutureDeadline = () => (getToday() + Math.floor((Math.random() * 8000000000)));

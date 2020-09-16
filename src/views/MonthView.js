@@ -20,11 +20,16 @@ const StyledLink = styled(Link)`
 `;
 
 const StyledLeftBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  min-width: 240px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto;
+  row-gap: 30px;
   margin-bottom: 50px;
   padding-right: 15px;
+  &>*{
+    margin: auto;
+  }
 `;
 
 const MonthView = ({ allPayments, context: { displiedDate } }) => {

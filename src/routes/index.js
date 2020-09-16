@@ -7,5 +7,5 @@ export const routes = {
   payment: '/payment/:paymentId',
   addnew: '/addnew',
   proceed: '/proceed/:paymentId',
-  test3: '/test3',
+  charts: '/charts',
 };

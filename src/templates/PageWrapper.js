@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const PageWrapper = styled.div`
-    width: 98%;
+    width: 96%;
     max-width: 1600px;
     margin: 0 auto;
     display: flex;

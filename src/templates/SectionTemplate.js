@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled, { ThemeProvider, css } from 'styled-components';
 import Header from 'components/atoms/Header/Header';
 import PlusButton from 'components/atoms/PlusButton/PlusButton';
-import PageWrapper from 'templates/PageWrapper/PageWrapper';
+import PageWrapper from 'templates/PageWrapper';
 
 const StyledSection = styled.section`
     background-color: ${
@@ -22,16 +22,27 @@ const StyledHeader = styled(Header)`
 `;
 
 const StyledAddBox = styled.div`
-  width: 60px;
+  width: 90px;
   height: 60px;
+
+  @media screen and (min-width: 440px){
+    width: 65px;
+  }
+  @media screen and (min-width: 768px){
+    width: 60px;
+  }
+  @media screen and (min-width: 1750px){
+    width: 0px;
+  }
 `;
 
 const StyledInnerWrapper = styled.div`
     width: 100%;
     display: flex;
     justify-content: center;
+    align-items: flex-start;
 
-    @media (max-width: 780px) {
+    @media (max-width: 900px) {
       flex-wrap: wrap;
     }
 

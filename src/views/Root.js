@@ -10,11 +10,12 @@ import store from 'store';
 import Dashboard from 'views/Dashboard';
 import CalendarView from 'views/CalendarView';
 import PaymentView from 'views/PaymentView';
-import TestView3 from 'views/TestsViews/TestView3';
+import Charts from 'views/Charts';
 import MonthView from 'views/MonthView';
 import DaysView from 'views/DaysView';
 import AddPaymentView from 'views/AddPaymentView';
 import ProceedPayment from 'views/ProceedPayment';
+import Page404 from 'views/Page404';
 import DataUpdater from 'assets/data/DataUpdater';
 import AppContext from 'context';
 import { loadState } from 'localStorage';
@@ -69,6 +70,7 @@ class Root extends React.Component {
   }
 
   handleDataUpdaterShow = () => {
+    document.body.style.overflowY = 'auto';
     this.setState({
       isDataUpdaterShown: false,
     });
@@ -93,12 +95,13 @@ class Root extends React.Component {
                 <Route exact path={routes.home} render={() => <Redirect to={routes.dashboard} />} />
                 <Route path={routes.dashboard} component={Dashboard} />
                 <Route path={routes.calendar} component={CalendarView} />
-                <Route path={routes.test3} component={TestView3} />
+                <Route path={routes.charts} component={Charts} />
                 <Route path={routes.month} component={MonthView} />
                 <Route path={routes.day} component={DaysView} />
                 <Route path={routes.payment} component={PaymentView} />
                 <Route path={routes.addnew} component={AddPaymentView} />
                 <Route path={routes.proceed} component={ProceedPayment} />
+                <Route path="*" component={Page404} />
               </Switch>
             </RootTemplate>
           </AppContext.Provider>

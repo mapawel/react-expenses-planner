@@ -14,7 +14,7 @@ import { connect } from 'react-redux';
 const StyledWrapper = styled.div`
     position: relative;
     align-self: flex-start;
-    min-width: 15%;
+    min-width: 240px;
     display: flex;
     flex-direction: column;
     align-content: center;

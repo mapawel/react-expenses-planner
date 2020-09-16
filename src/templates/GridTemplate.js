@@ -13,6 +13,7 @@ const StyledWrapper = styled.div`
     & * {
         margin: 5px;
     }
+
     & > a:first-of-type{
         display: grid;
         grid-row: 3/4;
@@ -30,6 +31,15 @@ const StyledWrapper = styled.div`
     }
     & > p:last-of-type{
         grid-row: 5/6;
+    }
+
+    @media (max-width: 440px) {
+        & > h1:nth-of-type(1){
+        display: none;
+    }
+        & > div:nth-of-type(1){
+        grid-column: 1/-1;
+    }
     }
 
     @media (min-width: 576px) {

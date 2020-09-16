@@ -1,6 +1,6 @@
 /* eslint-disable react/prefer-stateless-function */
 import React from 'react';
-import { NavLink, withRouter } from 'react-router-dom';
+import { Link, NavLink, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import Logo from 'components/atoms/Logo/Logo';
 import BurgerButton from 'components/atoms/BurgerButton/BurgerButton';
@@ -10,6 +10,7 @@ import calendarIcon from 'assets/icons/calendar.svg';
 import chartIcon from 'assets/icons/chart.svg';
 import leftTrimIcon from 'assets/icons/lefttrim.svg';
 import rightTrimIcon from 'assets/icons/righttrim.svg';
+import { routes } from 'routes';
 
 const StyledMenuWrapper = styled.div`
     position: relative;
@@ -123,6 +124,10 @@ const StyledTxt = styled.p`
   }
 `;
 
+const StyledLink = styled(Link)`
+  text-decoration: none;
+`;
+
 class Navigation extends React.Component {
   state = {
     isMenuOpen: false,
@@ -148,12 +153,12 @@ class Navigation extends React.Component {
 
     return (
       <StyledMenuWrapper>
-        <Logo />
+        <StyledLink to={routes.home}><Logo /></StyledLink>
         <StyledUlList isMenuOpen={isMenuOpen}>
           <StyledBox>
             <StyledLi>
               <StyledNavLink
-                to="/dashboard"
+                to={routes.dashboard}
                 activeClassName="active"
               >
                 <div>
@@ -166,7 +171,7 @@ class Navigation extends React.Component {
             </StyledLi>
             <StyledLi>
               <StyledNavLink
-                to="/calendar"
+                to={routes.calendar}
                 activeClassName="active"
               >
                 <div>
@@ -179,7 +184,7 @@ class Navigation extends React.Component {
             </StyledLi>
             <StyledLi>
               <StyledNavLink
-                to="/test3"
+                to={routes.charts}
                 activeClassName="active"
               >
                 <div>
