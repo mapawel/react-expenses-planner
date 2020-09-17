@@ -7,14 +7,15 @@ import { withRouter } from 'react-router-dom';
 import { routes } from 'routes';
 
 const StyledMainWrapper = styled.div`
-  min-height: calc(100vh - 30px);
+  min-height: calc(100vh - 50px);
 `;
 const StyledLink = styled.a`
   color: ${({ theme }) => theme.color.white};
 `;
 const StyledFooter = styled.div`
-  min-height: 30px;
-  line-height: 30px;
+  padding-top: 10px;
+  min-height: 40px;
+  line-height: 40px;
   text-align: center;
   background-color: ${({ theme }) => theme.color.darkblue};
   box-shadow: 0 5px 15px -3px ${({ theme }) => theme.color.darkshadow};

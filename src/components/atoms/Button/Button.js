@@ -52,6 +52,8 @@ const StyledSvg = styled(ReactSVG)`
     display: ${({ resetmargin }) => (resetmargin ? 'flex' : 'block')};
     justify-content: center;
     margin-right: ${({ resetmargin }) => (resetmargin ? '0' : '10px')};
+    &>div>svg{
+    max-height: 20px;}
 
     ${({ resetmargin }) => resetmargin && css`
     color: ${({ theme }) => (theme.backtype === 'secondary' ? theme.color.white : theme.color.darkgrey)};
