@@ -1,6 +1,51 @@
+# EXPENSES PLANNER
+## front-end for app to expensess management
+
+### LIVE EXAMPLE:
+https://stoic-leavitt-bd046f.netlify.app/dashboard
+
+### Project Scope:
+
+**complete graphic design, a selection of colors, fonts, graphic elements
+projecting a business logic, data flow from the front, data display
+creating views and components - e.g. calendar view with notes
+providing functionalities for the app presentation without a database - locale storage
+project for further development after finding a commercial use.**
+
+
+### Description:
+
+#### type
+
+Front-end of the expense management application. Application rendered in the browser.
+
+#### goal
+
+Creation of a usable, simple but functional application that will help users to plan expenses, remind about payments so that the user will always be up to date - just check.
+
+Application to develope, contains font rendered in the browser so far with data display logic and data flow. A server layer to be added, what at this stage will be easy to implement if the decision to produce is made.
+
+#### design
+
+The design is based on cards. Simplicity is broken by a wave that smoothly separates the sections on the dashboard view. One main color plus white and grey give clarity. Depending the view, there is white or blue backgroud shown for easier navigation on the app.
+
+Pretty interesting menu bar coded with icons and color indentation in the bar when active.
+
+#### actions
+
+Calendar view shows day-by-day payments, payment status, amount to be paid or already paid. If there are more payments during the day, it automatically displays the total amount as an abbreviated version of the information. You can use the calendar to go to payment, view details.
+
+The user can add individual payments or entire payment cycles (paid weekly, monthly etc.). Then, after making the payment, the user can change the status, amount and add a note to each payment. The user can modify his records.
+
+All information can also be displayed by month or day in separate views. Brief user information is available on the total spend for the entire month.
+
+------------
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+### Available Scripts
 
 In the project directory, you can run:
 
@@ -12,11 +57,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
 
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
 ### `yarn build`
 
 Builds the app for production to the `build` folder.<br />
@@ -27,42 +67,4 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `yarn eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
