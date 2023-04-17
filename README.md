@@ -14,6 +14,25 @@ project for further development after finding a commercial use.**
 
 
 ### Description:
+#### Tech stack:
+
+- React
+- Redux
+- React Router
+- Styled Components
+- Formik
+- Moment
+- Description:
+
+#### technicals
+
+React SPA, RWD.
+
+React Router used for rapid views changing. Redux used to collect and store data - for now locale storage used, however the app can be easly connected to the API with data-base.
+
+Callender view is fully custom component which renders day cards in Grid
+
+Front-end validation obtained by Formik. All elements are styled by Styled Components. Atomic Design attitude used.
 
 #### type
 
@@ -66,5 +85,4 @@ The build is minified and the filenames include the hashes.<br />
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
 
