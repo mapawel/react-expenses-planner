@@ -1,19 +1,10 @@
 # EXPENSES PLANNER
 ## front-end for app to expensess management
+> :warning: One of my very early projects completed during my front-end and basic JavaScript learning. Since that time, I have gained a lot of skills, and today it would look completely different :see_no_evil: I leave the code in the repository as a trace of my learning process from 2020 for comparison with current projects.
 
 ### LIVE EXAMPLE:
 https://stoic-leavitt-bd046f.netlify.app/dashboard
 
-### Project Scope:
-
-**complete graphic design, a selection of colors, fonts, graphic elements
-projecting a business logic, data flow from the front, data display
-creating views and components - e.g. calendar view with notes
-providing functionalities for the app presentation without a database - locale storage
-project for further development after finding a commercial use.**
-
-
-### Description:
 #### Tech stack:
 
 - React
@@ -23,6 +14,17 @@ project for further development after finding a commercial use.**
 - Formik
 - Moment
 - Description:
+
+### Project Scope:
+
+- complete graphic design, a selection of colors, fonts, graphic elements
+- projecting a business logic, data flow from the front, data display
+- creating views and components - e.g. calendar view with notes
+- providing functionalities for the app presentation without a database - locale storage
+- project for further development after finding a commercial use.
+
+
+### Description:
 
 #### technicals
 
